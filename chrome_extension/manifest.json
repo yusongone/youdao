@@ -1,0 +1,27 @@
+{
+"manifest_version": 2,
+"name":"spider translate",
+"version": "0.0.2",
+"description": "spider translate home made",
+"icons": 
+  { 
+    "16": "/images/spider.png",
+    "32": "/images/spider.png",
+    "48": "/images/spider.png"
+  },  
+"permissions":[    
+    "tabs",
+    "clipboardWrite",
+    "clipboardRead",
+    "http://*.youdao.com/"
+    ],  
+"background": {
+    "scripts": ["background.js"]
+  },
+"browser_action": {
+    "default_icon": "/images/spider.png",
+    //"default_icon": "/images/t_site_logo.png",
+    "default_title": "TestExt",
+    "default_popup": "popup.html"
+  }
+}

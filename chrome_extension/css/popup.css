@@ -1,0 +1,50 @@
+*,ul{box-sizing:border-box;list-style:none;margin:0;padding:0;}
+body{
+    min-width:280px;
+    padding:20px 10px;
+}
+.inputBox{
+    width:100%;
+}
+.inputBox input:focus{
+    border:1px solid #ddd;
+    outline:none;
+}
+.inputBox input{
+    width:100%;
+    height:24px;
+    line-height:24px;
+    padding-left:5px;
+    box-sizing:border-box;
+    border:1px solid #efefef;
+    border-radius:3px;
+}
+.trans_show{
+    font-size:14px;
+    color:#666;
+    }
+.trans_show .e_ui,.trans_show .web_ui{
+    padding-left:15px;
+    margin-top:15px;
+    padding-top:0px;
+    border-top:1px solid #efefef;
+}
+.trans_show .e_ui{
+    line-height:24px;
+    padding-top:10px;
+}
+.trans_show .web_ui{
+    margin-bottom:25px;
+    padding-top:5px;
+}
+.trans_show .web_ui li{
+    margin-top:10px;
+}
+.trans_show .web_ui .key{
+    color:#333;
+}
+.trans_show .web_ui .value{
+    font-size:12px;
+    margin-top:8px;
+    margin-left:15px;
+}
