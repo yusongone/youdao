@@ -1,55 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style rel="stylesheet">
-            *{margin:0;padding:0;box-sizing:border-box;}
-            body{}
-            @media(max-width<800){
-                .page{
-                    background:red;
-                    }
-                }
-            input{
-                float:left;
-                width:200px;
-                padding:5px;
-                height:24px;
-                line-height:24px;
-                width:450px;
-                border:1px solid #ddd;
-                }
-            .page{
-                width:600px;
-                margin:0 auto;
-                border:1px solid #efefef;
-                border-radius:5px;
-                margin-top:10px;
-                padding:20px;
-                overflow:hidden;
-                }
-            .btn{
-                backgroud:#ddd;
-                border:1px solid #ddd;
-                border-radius:5px;
-                float:left;
-                padding:3px 10px;
-                }
-            .inputBox{
-                float:left;
-                overflow:hidden;
-                }
-            .search_btn{
-                margin-left:10px;
-                }
-        </style>
+        <meta charset="utf=8" >
+        <link href="/css/search_page.css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width" >
+        <style rel="stylesheet"></style>
     </head>
+    <script src="/js/vendor/require-jquery.min.js" data-main="/js/search_page_private.js" ></script>
     <body>
         <div class="page">
             <div class="inputBox">
-                <input id="searchInput" />
-                <div class="btn search_btn">search</div>
-                <div id="trans_show" class="trans_show">
-                </div>
+                <input id="searchInput" class="search_input"/>
+                <div class="btn search_btn" id="searchBtn">search</div>
+                <div id="trans_show" class="trans_show"> 
+                </div> 
             </div>
         </div>
     </body>

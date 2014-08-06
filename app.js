@@ -1,27 +1,37 @@
-var http=require("http");
-var fs=require("fs");
-var ms=require("mediaserver");
+var express=require("express");
+var cookieParser=require("cookie-parser");
+var session=require("express-session");
+var bodyParser=require("body-parser");
+var ejs=require("ejs");
+var MemoryStore=new session.MemoryStore;
+var router=require("./router");
+var app=express();
 
-http.get("http://fanyi.youdao.com/openapi.do?keyfrom=makejs&key=1081520201&type=data&doctype=json&version=1.1&q=%E7%BF%BB%E8%AF%91",function(res){
-    var string="";
-    res.on("data",function(chunk){
-        string+=chunk;
-        });
-    res.on("end",function(){
-        console.log(string);
-        });
-    });
-   var filePath = '/Users/songyu/myProject/youdao/test2.mp3',
-    stat = fs.statSync(filePath);
 
-http.createServer(function(request, response) {
+app.listen(3111);
 
-    response.writeHead(200, {
-        'Content-Type': 'audio/mpeg',
-        'Content-Length': stat.size
-    });
+app.use(express.static(__dirname+'/public'));
+app.use(cookieParser("keyboard cat"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+      extended: true
+}));
+app.use(session({
+    resave:true,
+    saveUninitialized:true,
+    secret: 'keyboard cat',
+    cookie: { secure: true }
+}));
 
-    // We replaced all the event handlers with a simple call to util.pump()
-    fs.createReadStream(filePath).pipe(response);
-})
-.listen(6600);
+app.set("views",__dirname+"/views");
+app.engine("html",ejs.renderFile);
+app.set('view engine', 'html');
+
+
+app.use(function(req,res,next){
+    console.log("have a request");
+    next();
+});
+router.init(app);
+
+
