@@ -7,17 +7,23 @@ function bindEvent(){
     $("#searchBtn").click(function(key){
         getPathData($("#searchInput").val());
     });
+    $("#searchInput").focus().keydown(function(event){
+        if(event.keyCode=="13"){
+            getPathData($("#searchInput").val());
+        }
+    });
 }
 function getaudio(world){
-    var d='<audio class="wordPlay" style="width:100%;" controls=""  name="media"><source src="http://dict.youdao.com/dictvoice?audio='+world+'" type="audio/mpeg"></audio>';
+    var d='<audio class="wordPlay" controls name="media"><source src="http://dict.youdao.com/dictvoice?audio='+world+'" type="audio/mpeg"></audio>';
     var f=$(d)[0];
     f.onended=function(){
         //$(this).remove();
     }
     $(".wordPlay").remove();
-    $(".page").append(f);
+    $("#audioBox").append(f);
 }
 function getPathData(val){
+    $("#searchBtn").addClass("loading").text("loading...");
     $.ajax({
         url:"/getTranslateData",
         type:"post",
@@ -26,11 +32,27 @@ function getPathData(val){
         },
         dataType:"json",
         success:function(data){
+            console.log(data);
+            getDataSuccess();
             createList(data);
-            getaudio(val);
+            //getaudio(val);
             }
         });
 }
+
+function getDataSuccess(){
+    $("#searchInput").blur();
+    $("#searchBtn").removeClass("loading").text("search");
+    $(".getSound").remove();
+    $(".wordPlay").remove();
+    var getSound=$("<div/>",{"class":"btn getSound","text":"获取发音"});
+   $(".audioBox").show().append(getSound); 
+   getSound.click(function(){
+       $(this).remove();
+       getaudio($("#searchInput").val());
+   });
+};
+
 function createList(data){
     var explains_UI=$("<ul/>",{"class":"e_ui"}); 
     var web_UI=$("<ul/>",{"class":"web_ui"}); 
