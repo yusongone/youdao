@@ -21,7 +21,6 @@ function getaudio(world){
 	//var source=$("<source/>",{"src":"http://www.w3school.com.cn/i/song.mp3","type":"audio/mpeg"})
 		dd.append(source);
 	dd[0].onended=function(){
-			alert();
 	}
 	window.dd=dd;
     $(".wordPlay").remove();
