@@ -7,8 +7,10 @@ var MemoryStore=new session.MemoryStore;
 var router=require("./router");
 var app=express();
 
-
-app.listen(3111);
+var disport=3111;
+app.listen(disport,function(){
+	console.log("listen at "+disport);
+});
 
 app.use(express.static(__dirname+'/public'));
 app.use(cookieParser("keyboard cat"));

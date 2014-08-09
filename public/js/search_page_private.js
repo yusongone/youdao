@@ -14,13 +14,18 @@ function bindEvent(){
     });
 }
 function getaudio(world){
-    var d='<audio class="wordPlay" controls name="media"><source src="http://dict.youdao.com/dictvoice?audio='+world+'" type="audio/mpeg"></audio>';
-    var f=$(d)[0];
-    f.onended=function(){
-        //$(this).remove();
-    }
+	var dd=$("<audio/>",{"class":"wordPlay","controls":true,"name":"media"});
+	//var source=$("<source/>",{"src":"http://dict.youdao.com/dictvoice?audio="+world,"type":"audio/mpeg"})
+	var source=$("<source/>",{"src":"/get_voice.mp3?word="+world,"type":"audio/mpeg"})
+	//var source=$("<source/>",{"src":"/js/abc.mp3?word=","type":"audio/mpeg"})
+	//var source=$("<source/>",{"src":"http://www.w3school.com.cn/i/song.mp3","type":"audio/mpeg"})
+		dd.append(source);
+	dd[0].onended=function(){
+			alert();
+	}
+	window.dd=dd;
     $(".wordPlay").remove();
-    $("#audioBox").append(f);
+    $("#audioBox").append(dd);
 }
 function getPathData(val){
     $("#searchBtn").addClass("loading").text("loading...");
@@ -45,7 +50,8 @@ function getDataSuccess(){
     $("#searchBtn").removeClass("loading").text("search");
     $(".getSound").remove();
     $(".wordPlay").remove();
-    var getSound=$("<div/>",{"class":"btn getSound","text":"获取发音"});
+    var getSound=$("<div/>",{"class":"btn getSound"});
+		getSound.append("<i class='fa fa-volume-up'></i>","获取发音");
    $(".audioBox").show().append(getSound); 
    getSound.click(function(){
        $(this).remove();
