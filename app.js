@@ -3,12 +3,25 @@ var cookieParser=require("cookie-parser");
 var session=require("express-session");
 var bodyParser=require("body-parser");
 var ejs=require("ejs");
-var MemoryStore=new session.MemoryStore;
+var mongoStore=require("connect-mongo")(session);
 var router=require("./router");
+var session_conf=require("./config.json").session_conf;
 var app=express();
+var store=new mongoStore({
+		db:session_conf.dbname,
+	            host:session_conf.path,
+	            port:session_conf.port,  // optional, default: 27017
+	            username:session_conf.user, // optional
+	            password:session_conf.pass, // optional
+	            collection:session_conf.collection,// optional, default: sessions
+	            safe:true
+});
 
 
-app.listen(80);
+var disport=80;
+app.listen(disport,function(){
+	console.log("listen at "+disport);
+});
 
 app.use(express.static(__dirname+'/public'));
 app.use(cookieParser("keyboard cat"));
@@ -17,10 +30,10 @@ app.use(bodyParser.urlencoded({
       extended: true
 }));
 app.use(session({
-    resave:true,
-    saveUninitialized:true,
-    secret: 'keyboard cat',
-    cookie: { secure: true }
+		secret: 'keyboard cat'
+		,saveUninitialized:true
+		,resave:true
+		,store:store
 }));
 
 app.set("views",__dirname+"/views");

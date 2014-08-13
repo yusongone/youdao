@@ -12,15 +12,46 @@ function bindEvent(){
             getPathData($("#searchInput").val());
         }
     });
+    $("#menu").click(function(event){
+		if($(".overflow").length){return;}
+		var menu=this;
+		$(this).addClass("active");
+		var od=$("<div/>",{"class":"overflow"})
+			$("body").append(od);
+		showMenu(1);
+		od.click(function(){
+			showMenu(0,function(){
+				$(menu).removeClass("active");
+			});
+			od.remove();
+		});
+		$("body").addClass("bodyover");
+	});
+}
+function showMenu(action,callback){
+	if(action){
+		//$(".side_menu").animate({"left":"0%"});
+		$(".side_menu").slideDown(function(){
+		});
+	}else{
+		//$(".side_menu").animate({"left":"-100%"});
+		$(".side_menu").slideUp(function(){
+				callback();
+		});
+	}
 }
 function getaudio(world){
-    var d='<audio class="wordPlay" controls name="media"><source src="http://dict.youdao.com/dictvoice?audio='+world+'" type="audio/mpeg"></audio>';
-    var f=$(d)[0];
-    f.onended=function(){
-        //$(this).remove();
-    }
+	var dd=$("<audio/>",{"class":"wordPlay","controls":true,"name":"media"});
+	//var source=$("<source/>",{"src":"http://dict.youdao.com/dictvoice?audio="+world,"type":"audio/mpeg"})
+	var source=$("<source/>",{"src":"/get_voice.mp3?word="+world,"type":"audio/mpeg"})
+	//var source=$("<source/>",{"src":"/js/abc.mp3?word=","type":"audio/mpeg"})
+	//var source=$("<source/>",{"src":"http://www.w3school.com.cn/i/song.mp3","type":"audio/mpeg"})
+		dd.append(source);
+	dd[0].onended=function(){
+	}
+	window.dd=dd;
     $(".wordPlay").remove();
-    $("#audioBox").append(f);
+    $("#audioBox").append(dd);
 }
 function getPathData(val){
     $("#searchBtn").addClass("loading").text("loading...");
@@ -33,6 +64,11 @@ function getPathData(val){
         dataType:"json",
         success:function(data){
             console.log(data);
+			if(data.status=="fail"){
+				alert(data.message);
+				location.href="/login"
+				return;
+			}
             getDataSuccess();
             createList(data);
             //getaudio(val);
@@ -45,7 +81,8 @@ function getDataSuccess(){
     $("#searchBtn").removeClass("loading").text("search");
     $(".getSound").remove();
     $(".wordPlay").remove();
-    var getSound=$("<div/>",{"class":"btn getSound","text":"获取发音"});
+    var getSound=$("<div/>",{"class":"btn getSound"});
+		getSound.append("<i class='fa fa-volume-up'></i>","获取发音");
    $(".audioBox").show().append(getSound); 
    getSound.click(function(){
        $(this).remove();
@@ -58,6 +95,7 @@ function createList(data){
     var web_UI=$("<ul/>",{"class":"web_ui"}); 
     $("#trans_show").html("").append(explains_UI,web_UI);
     var explains=data.basic.explains;
+
     for(var i=0;i<explains.length;i++){
        var li=$("<li/>",{"html":explains[i]}); 
        explains_UI.append(li);
