@@ -12,6 +12,33 @@ function bindEvent(){
             getPathData($("#searchInput").val());
         }
     });
+    $("#menu").click(function(event){
+		if($(".overflow").length){return;}
+		var menu=this;
+		$(this).addClass("active");
+		var od=$("<div/>",{"class":"overflow"})
+			$("body").append(od);
+		showMenu(1);
+		od.click(function(){
+			showMenu(0,function(){
+				$(menu).removeClass("active");
+			});
+			od.remove();
+		});
+		$("body").addClass("bodyover");
+	});
+}
+function showMenu(action,callback){
+	if(action){
+		//$(".side_menu").animate({"left":"0%"});
+		$(".side_menu").slideDown(function(){
+		});
+	}else{
+		//$(".side_menu").animate({"left":"-100%"});
+		$(".side_menu").slideUp(function(){
+				callback();
+		});
+	}
 }
 function getaudio(world){
 	var dd=$("<audio/>",{"class":"wordPlay","controls":true,"name":"media"});
@@ -37,6 +64,11 @@ function getPathData(val){
         dataType:"json",
         success:function(data){
             console.log(data);
+			if(data.status=="fail"){
+				alert(data.message);
+				location.href="/login"
+				return;
+			}
             getDataSuccess();
             createList(data);
             //getaudio(val);
@@ -63,6 +95,7 @@ function createList(data){
     var web_UI=$("<ul/>",{"class":"web_ui"}); 
     $("#trans_show").html("").append(explains_UI,web_UI);
     var explains=data.basic.explains;
+
     for(var i=0;i<explains.length;i++){
        var li=$("<li/>",{"html":explains[i]}); 
        explains_UI.append(li);

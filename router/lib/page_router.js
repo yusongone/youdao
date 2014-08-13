@@ -1,6 +1,12 @@
 var word_sound=require("../../model").word_sound;
+var controller=require("../../controller");
+var model=require("../../model");
+
 function init(app){
-    app.get("/",function(req,res,next){
+	app.get("/",function(req,res,next){
+		if(!req.session.userId){
+			res.redirect("/login");
+		}
         res.render("search_page",{});
     });
 	
@@ -14,6 +20,33 @@ function init(app){
 			});
 			//myReadableStreamBuffer.pipe(res);
 			res.end(buf,"binary");
+		});
+	});
+
+    app.get("/login",function(req,res,next){
+		var head=controller.page_render.head;
+		if(req.session.userId){
+			res.redirect("/");
+		}
+        res.render("login",{
+			"head":head
+		});
+    });
+    app.get("/logout",function(req,res,next){
+		req.session.userId=null;
+		res.send("logout");
+	});
+
+    app.get("/today",function(req,res,next){
+		if(!req.session.userId){
+			res.redirect("/login");
+		}
+		var head=controller.page_render.head;
+		model.local_word.getDayWord({"userId":req.session.userId+""},function(err,result){
+			res.render("today_word",{
+				"head":head,
+				"wordList":result
+			});
 		});
 	});
 }

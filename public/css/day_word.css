@@ -1,0 +1,47 @@
+@media(max-width:600px){
+    body{
+        width:100%;
+        background:#fff;
+        }
+    .page{width:100%;}
+    }
+@media(min-width:600px){
+    body{
+        width:100%;
+        }
+}
+.showBox{
+	font-size:14px;
+}
+.showBox .one_word{
+	overflow: hidden;
+	margin: 0 auto;
+	margin-bottom:10px;
+}
+.key{
+	font-size:18px;
+	background:#efefef;
+	width:100%;
+	display:block;
+	padding:2px 5px;
+}
+.key .fa{
+	float: right;
+	line-height: 22px;
+	font-size: 14px;
+	font-weight: normal;
+}
+.trans{
+	margin-left:15px;
+	display:none;
+}
+.basic li,.web li{
+	line-height:24px;
+}
+.basic,.web{
+	margin-top:10px;
+}
+.web_key{
+	color:#666;
+	font-weight:bold;
+}

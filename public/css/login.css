@@ -1,0 +1,38 @@
+@media(max-width:600px){
+    body{
+        width:100%;
+        background:#fff;
+        }
+    .page{width:100%;}
+    }
+@media(min-width:600px){
+    body{
+        width:100%;
+        }
+    .search_input{
+        width:450px;
+        } 
+}
+.showBox{
+	margin-top:20px;
+	font-size:14px;
+}
+.showBox label{
+	float:left;
+	width:60px;
+	text-align:right;
+	margin-right:10px;
+	height:24px;
+	line-height:24px;
+}
+
+.showBox li{
+	width: 250px;
+	overflow: hidden;
+	margin: 0 auto;
+	margin-bottom:20px;
+}
+.showBox .loginBtn{
+	float:right;
+	margin-right:5px;
+}

@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf=8" >
         <link href="/css/vendor/font-awesome.min.css" rel="stylesheet" />
+        <link href="/css/global.css" rel="stylesheet" />
         <link href="/css/search_page.css" rel="stylesheet" />
         <meta name="viewport" content="width=device-width" >
         <style rel="stylesheet"></style>
@@ -10,7 +11,7 @@
     <script src="/js/vendor/require-jquery.min.js" data-main="/js/search_page_private.js" ></script>
     <body>
         <div class="page">
-            <div class="logo"></div>
+				<div class="logo"><i id="menu" class="fa fa-bars menu"></i><i id="set" class="fa fa-cog set"></i></div>
             <div class="showBox">
                 <div class="inputBox">
                     <input id="searchInput" class="search_input"/>
@@ -21,6 +22,12 @@
             </div>
             <div id="audioBox" class="audioBox">
             </div>
+			<div class="side_menu">
+				<ul>
+					<li><a href="/today">今日查询</a></li>
+					<li>浏览单词</li>
+				</ul>
+			</div>
         </div>
         <div class="footer">翻译API来自于有道</div>
     </body>
