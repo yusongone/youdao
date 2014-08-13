@@ -8,7 +8,7 @@ var router=require("./router");
 var app=express();
 
 
-app.listen(3111);
+app.listen(80);
 
 app.use(express.static(__dirname+'/public'));
 app.use(cookieParser("keyboard cat"));
@@ -26,11 +26,12 @@ app.use(session({
 app.set("views",__dirname+"/views");
 app.engine("html",ejs.renderFile);
 app.set('view engine', 'html');
-
-
+var count=0;
 app.use(function(req,res,next){
-    console.log("have a request");
+var d=req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+    console.log(count+":"+d+":have a request");
     next();
+    count++;
 });
 router.init(app);
 
