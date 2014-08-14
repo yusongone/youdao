@@ -15,9 +15,11 @@ function init(app){
 		youdaoModel.getData(requestString,function(err,string){
 		var obj=JSON.parse(string);
            if(err){
+			   res.send({"status":"error"});
+			   return;
            }
            res.send(string); 
-		   if(obj.basic||obj.web){
+		   if(obj.basic){
 				model.local_word.addWord({word:requestString,obj:obj,userId:req.session.userId},function(){});
 		   }
        }); 

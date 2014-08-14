@@ -15,7 +15,7 @@ function init(app){
 			res.writeHead(200, {
 				"Accept-Ranges":"bytes",
 				'Content-Type': 'audio/mpeg',
-				'Cache-Control':'public, max-age=0',
+				'Cache-Control':'public, max-age=1000*60',
 				"Content-Length":buf.length,
 			});
 			//myReadableStreamBuffer.pipe(res);
