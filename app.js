@@ -18,7 +18,7 @@ var store=new mongoStore({
 });
 
 
-var disport=3111;
+var disport=80;
 app.listen(disport,function(){
 	console.log("listen at "+disport);
 });
@@ -39,11 +39,12 @@ app.use(session({
 app.set("views",__dirname+"/views");
 app.engine("html",ejs.renderFile);
 app.set('view engine', 'html');
-
-
+var count=0;
 app.use(function(req,res,next){
-    console.log("have a request");
+var d=req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+    console.log(count+":"+d+":have a request");
     next();
+    count++;
 });
 router.init(app);
 
