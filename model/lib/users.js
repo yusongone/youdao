@@ -33,6 +33,5 @@ function _register(json,callback){
 		});
 	});
 }
-
 exports.auth=_auth;
 exports.register=_register;
