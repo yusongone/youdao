@@ -25,7 +25,6 @@ var objId=new objectId();
 							});
 						});
 					}else{
-console.log(result1._id);
 						_addWordDate({userId:json.userId,wordId:result1._id},function(err,result2){
 						poolMain.release(database);
 						});
@@ -40,13 +39,13 @@ function _addWordDate(json,callback){
 	var d=dateObj.getFullYear()+"-"+(1+dateObj.getMonth())+"-"+dateObj.getDate();
 	poolMain.acquire(function(err,database){
 		var col=database.collection("date");
-		col.findOne({"date":d},function(err,result){
+		col.findOne({"userId":json.userId,"date":d},function(err,result){
 			if(null==result){
 				col.insert({"userId":json.userId,"date":d,"wordList":[wordId]},function(err,result){
 				callback(err,result);
 });
 			}else{
-				col.update({"date":d},{$addToSet:{"wordList":wordId}},function(err,result){
+				col.update({"userId":json.userId,"date":d},{$addToSet:{"wordList":wordId}},function(err,result){
 				callback(err,result);
 });
 			};

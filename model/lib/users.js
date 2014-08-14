@@ -5,7 +5,7 @@ function _auth(json,callback){
 	var id=json.id;
 	var pass=json.pass;
 	poolMain.acquire(function(err,database){
-		var col=database.collection("date_list");
+		var col=database.collection("users");
 		var md5=crypto.createHash("md5");
 		var md5Pass=md5.update(pass).digest("base64");
 		col.find({"account":json.id,"pass":md5Pass}).toArray(function(err,docAry){
@@ -25,7 +25,7 @@ function _register(json,callback){
 	var id=json.id;
 	var pass=json.pass;
 	poolMain.acquire(function(err,database){
-		var col=database.collection("date_list");
+		var col=database.collection("users");
 		var md5=crypto.createHash("md5");
 		var md5Pass=md5.update(pass).digest("base64");
 		col.insert({"account":json.id,"pass":md5Pass},function(err,result){
