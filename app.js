@@ -34,6 +34,7 @@ app.use(session({
 		,saveUninitialized:true
 		,resave:true
 		,store:store
+		,maxAge:1000*60*30
 }));
 
 app.set("views",__dirname+"/views");
