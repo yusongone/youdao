@@ -8,7 +8,7 @@ var router=require("./router");
 var app=express();
 
 
-app.listen(3111);
+app.listen(3000);
 
 app.use(express.static(__dirname+'/public'));
 app.use(cookieParser("keyboard cat"));
@@ -20,7 +20,7 @@ app.use(session({
     resave:true,
     saveUninitialized:true,
     secret: 'keyboard cat',
-    cookie: { secure: true }
+    cookie: {maxAge:20*1000, secure: true }
 }));
 
 app.set("views",__dirname+"/views");
@@ -32,6 +32,6 @@ app.use(function(req,res,next){
     console.log("have a request");
     next();
 });
+return;
 router.init(app);
-
 
