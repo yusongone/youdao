@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<%-head%>
+        <link href="/css/vendor/font-awesome.min.css" rel="stylesheet" />
+        <link href="/css/global.css" rel="stylesheet" />
+        <link href="/css/day_word.css" rel="stylesheet" />
+        <style rel="stylesheet"></style>
+    </head>
+    <script src="/js/vendor/require-jquery.min.js" data-main="/js/day_word.js" ></script>
+    <body>
+        <div class="page">
+			<div class="logo"><a href="/"><i class="fa fa-home menu"></i></a><i class="fa fa-cog set"></i></div>
+            <ul class="showBox">
+				<%if(locals.wordList){%>
+					<%for(var i=0;i<wordList.length;i++){%>
+						<% word=wordList[i] %>
+						<%include /ejs/word_li%>
+					<%}%>
+				<%}%>
+            </ul>
+        </div>
+        <div class="footer">翻译API来自于有道</div>
+    </body>
+</html>
