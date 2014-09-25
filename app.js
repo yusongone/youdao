@@ -18,7 +18,7 @@ var store=new mongoStore({
 });
 
 
-var disport=80;
+var disport=3420;
 app.listen(disport,function(){
 	console.log("listen at "+disport);
 });
@@ -46,6 +46,11 @@ var d=req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.sock
     console.log(count+":"+d+":have a request");
     next();
     count++;
+});
+app.get("/",function(req,res){
+  console.log(req.session.fffid);
+  req.session.fffid="abc";
+  res.send({"fe":"fefefefe"});
 });
 return;
 router.init(app);
