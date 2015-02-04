@@ -47,11 +47,5 @@ var d=req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.sock
     next();
     count++;
 });
-app.get("/",function(req,res){
-  console.log(req.session.fffid);
-  req.session.fffid="abc";
-  res.send({"fe":"fefefefe"});
-});
-return;
 router.init(app);
 
