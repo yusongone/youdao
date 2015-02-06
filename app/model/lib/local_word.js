@@ -17,7 +17,7 @@ function _addWord(json,callback){
 var objId=new objectId();
 	poolMain.acquire(function(err,database){
 		var col=database.collection("word");
-			col.findOne({"word":json.word},function(err,result1){
+			col.findOne({"word":json.word,"userId":json.userId},function(err,result1){
 					if(null==result1){
 						col.insert({"userId":json.userId,"_id":objId,"word":json.word,"trans":json.obj},function(err){
 							_addWordDate({userId:json.userId,wordId:objId},function(err){
@@ -78,5 +78,16 @@ function _getDayWord(json,callback){
 	});
 }
 
+
+function _getUserAllWord(json,callback){
+	poolMain.acquire(function(err,database){
+			var wdcol=database.collection("word");
+				wdcol.find({"userId":json.userId},{"_id":0,"word":1,"trans":1}).toArray(function(err,result2){
+					callback(err,result2);
+					poolMain.release(database);
+				});
+  });
+}
 exports.addWord=_addWord;
 exports.getDayWord=_getDayWord;
+exports.getUserAllWord=_getUserAllWord;

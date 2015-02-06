@@ -56,7 +56,7 @@ function getaudio(world){
 function getPathData(val){
     $("#searchBtn").addClass("loading").text("loading...");
     $.ajax({
-        url:"/getTranslateData",
+        url:"/trans/getTranslateData",
         type:"post",
         data:{
             "q":val

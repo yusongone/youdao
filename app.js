@@ -4,9 +4,9 @@ var session=require("express-session");
 var bodyParser=require("body-parser");
 var ejs=require("ejs");
 var mongoStore=require("connect-mongo")(session);
-var router=require("./router");
 var session_conf=require("./config.json").session_conf;
 var app=express();
+var Controller=require("./app/controller");
 var store=new mongoStore({
 		db:session_conf.dbname,
 	            host:session_conf.path,
@@ -37,7 +37,7 @@ app.use(session({
 		,maxAge:1000*60*30
 }));
 
-app.set("views",__dirname+"/views");
+app.set("views",__dirname+"/app/views");
 app.engine("html",ejs.renderFile);
 app.set('view engine', 'html');
 var count=0;
@@ -47,5 +47,5 @@ var d=req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.sock
     next();
     count++;
 });
-router.init(app);
 
+Controller(app);
