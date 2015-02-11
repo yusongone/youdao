@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <% include public_dom/public_header %>
+        <meta charset="utf=8" >
+        <meta name="viewport" content="width=device-width" >
         <script src="/js/vendor/require-jquery.min.js" data-main="/js/day_word.js" ></script>
         <link href="/css/vendor/font-awesome.min.css" rel="stylesheet" />
-        <link href="/css/global.css" rel="stylesheet" />
         <link href="/css/day_word.css" rel="stylesheet" />
         <style rel="stylesheet"></style>
     </head>
     <body>
+        <div class="top_bar">
+			    <div class="logo">
+              <a href="/">
+                <i class="fa fa-home menu"></i>
+              </a>
+              <i class="fa fa-cog set"></i>
+          </div>
+        </div>
         <div class="page">
-			<div class="logo"><a href="/"><i class="fa fa-home menu"></i></a><i class="fa fa-cog set"></i></div>
             <ul class="showBox">
 				<%if(locals.wordList){%>
 					<%for(var i=0;i<wordList.length;i++){%>

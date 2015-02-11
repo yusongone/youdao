@@ -3,8 +3,7 @@
         width:100%;
         background:#fff;
         }
-    .page{width:100%;}
-    }
+}
 @media(min-width:600px){
     body{
         width:100%;
@@ -19,11 +18,15 @@
 	margin-bottom:10px;
 }
 .key{
+  border-left: 2px solid #eee;
 	font-size:18px;
-	background:#efefef;
 	width:100%;
 	display:block;
-	padding:2px 5px;
+	padding:10px 10px;
+  background: rgba(10,10,10,0.02);
+}
+.key:hover{
+  background: rgba(10,10,10,0.04);
 }
 .key .fa{
 	float: right;
@@ -48,6 +51,11 @@
 .getSound{
 	float:right;
 	margin:10px 0px;
+}
+@media (max-width:600px){
+  .getSound{
+    margin-right:30px;
+  }
 }
 .getSound .fa{
 	line-height:20px;

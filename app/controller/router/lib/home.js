@@ -1,7 +1,8 @@
 var router=require("express").Router();
-var word_sound=require("../../../model").word_sound;
-var controller=require("../../../controller");
 var model=require("../../../model");
+var word_sound=model.word_sound;
+var users=model.users;
+var controller=require("../../../controller");
 
 
 module.exports=function(app){
@@ -14,13 +15,11 @@ router.get("/",function(req,res,next){
 
 
 router.get("/login",function(req,res,next){
-  var head=controller.page_render.head;
 
   if(req.session.userId){
     res.redirect("/");
   }
   res.render("login",{
-    "head":head
   });
 
 });

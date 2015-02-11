@@ -7,9 +7,9 @@ requirejs(["jquery"],function($){
 
 page=(function(){
 	function createVoice(word,callback){
-		var src="/get_voice.mp3?word="+word;
+		var src="/trans/get_voice/?word="+word;
 		//var src="http://dict.youdao.com/dictvoice?audio="+word;
-		var audio=$("<audio/>",{"controls":1,"id":word,"style":"display:none;"});
+		var audio=$("<audio/>",{"autoplay":"true","controls":1,"id":word,"style":"display:none;"});
 		var source=$("<source/>");
 		audio.append(source);
 		source[0].src=src;

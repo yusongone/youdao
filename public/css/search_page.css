@@ -1,17 +1,7 @@
 @media(max-width:600px){
-    body{
-        width:100%;
-        background:#fff;
-        }
-    .page{width:100%;}
-    }
-@media(min-width:600px){
-    body{
-        width:100%;
-        }
-    .search_input{
-        width:450px;
-        } 
+  .page{
+    padding:10px;
+  }
 }
 .showBox{
     float:left;
@@ -51,7 +41,7 @@
     font-size:14px;
     color:#666;
     }
-.trans_show .e_ui,.trans_show .web_ui{
+.trans_show .phonetic_ui,.trans_show .e_ui,.trans_show .web_ui{
     float:left;
     padding-left:15px;
     margin-top:15px;
@@ -67,6 +57,11 @@
     margin-bottom:25px;
     padding-top:5px;
     border-top:1px solid #efefef;
+}
+.trans_show .phonetic_ui li{
+    float: left;
+    margin-right: 35px;
+    color:#a60505;
 }
 .trans_show .web_ui li{
     margin-top:10px;

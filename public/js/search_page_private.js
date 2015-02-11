@@ -41,9 +41,9 @@ function showMenu(action,callback){
 	}
 }
 function getaudio(world){
-	var dd=$("<audio/>",{"class":"wordPlay","controls":true,"name":"media"});
+	var dd=$("<audio/>",{"class":"wordPlay","autoplay":"true","controls":true,"name":"media"});
 	//var source=$("<source/>",{"src":"http://dict.youdao.com/dictvoice?audio="+world,"type":"audio/mpeg"})
-	var source=$("<source/>",{"src":"/get_voice.mp3?word="+world,"type":"audio/mpeg"})
+	var source=$("<source/>",{"src":"/trans/get_voice/?word="+world,"type":"audio/mpeg"})
 	//var source=$("<source/>",{"src":"/js/abc.mp3?word=","type":"audio/mpeg"})
 	//var source=$("<source/>",{"src":"http://www.w3school.com.cn/i/song.mp3","type":"audio/mpeg"})
 		dd.append(source);
@@ -93,9 +93,11 @@ function getDataSuccess(){
 function createList(data){
     var explains_UI=$("<ul/>",{"class":"e_ui"}); 
     var web_UI=$("<ul/>",{"class":"web_ui"}); 
-    $("#trans_show").html("").append(explains_UI,web_UI);
+    var phonetic=$("<ul/>",{"class":"phonetic_ui"}); 
+    $("#trans_show").html("").append(phonetic,explains_UI,web_UI);
     var explains=data.basic.explains;
-
+    data.basic["us-phonetic"]?phonetic.append("<li>US : "+data.basic["us-phonetic"]+"</li>"):"";
+    data.basic["uk-phonetic"]?phonetic.append("<li>UK : "+data.basic["uk-phonetic"]+"</li>"):"";
     for(var i=0;i<explains.length;i++){
        var li=$("<li/>",{"html":explains[i]}); 
        explains_UI.append(li);

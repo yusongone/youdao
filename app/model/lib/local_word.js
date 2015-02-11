@@ -70,7 +70,7 @@ function _getDayWord(json,callback){
 					ary.push(new objectId(wl[i]));
 				}
 			var wdcol=database.collection("word");
-				wdcol.find({"_id":{$in:ary}},{"_id":0,"word":1,"trans":1}).toArray(function(err,result2){
+				wdcol.find({"_id":{$in:ary}},{"_id":0,"word":1,"trans":1}).sort({"_id":-1}).toArray(function(err,result2){
 					callback(err,result2);
 					poolMain.release(database);
 				});
@@ -82,7 +82,7 @@ function _getDayWord(json,callback){
 function _getUserAllWord(json,callback){
 	poolMain.acquire(function(err,database){
 			var wdcol=database.collection("word");
-				wdcol.find({"userId":json.userId},{"_id":0,"word":1,"trans":1}).toArray(function(err,result2){
+				wdcol.find({"userId":json.userId},{"_id":0,"word":1,"trans":1}).sort({"_id":-1}).toArray(function(err,result2){
 					callback(err,result2);
 					poolMain.release(database);
 				});
