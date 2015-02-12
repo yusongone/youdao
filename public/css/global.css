@@ -15,7 +15,7 @@ input{
     padding-left:5px;
     height:24px;
     line-height:24px;
-    border:1px solid #ddd;
+    border:1px solid #efefef;
 }
 .bodyover{
 	overflow:hidden;
@@ -24,32 +24,65 @@ input{
     border-radius:5px;
     float:left;
     padding:3px 10px;
-    color:#333;
+    color:#888;
     background:#f8f8f8;
-    border:1px solid #dfdfdf;
+    border:1px solid #efefef;
 	  cursor:pointer;
 	  text-align:center;
 }
+.btn:hover{
+    color:#333;
+    border:1px solid #ddd;
+    background:#d8d8d8;
+}
 
 .top_bar{
-  width:100%;
-  height:45px;
-  background:#fd0;
+  width: 100%;
+  height: 45px;
+  background: #fd0;
+  z-index: 99999;
+  position: relative;
+  border-top:1px solid #999;
+  border-bottom:1px solid #ddd;
 }
-.logo{
+.top_bar .bar{
     background:url("/images/spider.png") no-repeat center center;
     width:100%;
     height:45px;
     background-size:30px;
-    max-width:600px;
+    max-width:800px;
     margin:0 auto;
 }
-@media(max-width:600px){
-  .logo{
+@media(min-width:500px){
+  .top_bar .bar{
+    background-position:20px center;
   }
 }
 
-
+.top_bar .link_box{
+  margin-left:60px;
+  float:left;
+}
+.link_box a{
+  line-height: 45px;
+  display: block;
+  float: left;
+  padding: 0 20px;
+  font-size:16px;
+  color:#444;
+}
+.link_box a:last-child{
+  border-right:none;
+}
+.link_box a:hover{
+  background: rgba(255, 242, 242, 0.5);
+  color:#333;
+}
+@media(max-width:500px){
+  .top_bar .link_box{
+    display:none;
+  }
+}
 .page{
     width:600px;
     margin:10px auto;
@@ -84,6 +117,12 @@ input{
 .menu{
 	margin-left:5px;
 	float:left;
+  display:none;
+}
+@media(max-width:500px){
+  .menu{
+    display:block;
+  }
 }
 .set{
 	float:right;

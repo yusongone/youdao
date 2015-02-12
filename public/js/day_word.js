@@ -50,12 +50,26 @@ page=(function(){
     $("#knob").click(function(){
       _toggleSideBar();
     });
+    $(window).resize(function(){
+      if(window.innerWidth>500){
+        _toggleSideBar(0);
+      }
+    });
 
 	}
 
-  function _toggleSideBar(){
+  function _toggleSideBar(com){
     var side_bar=$(".side_bar");
     var status=side_bar.data("status");
+    if(com==1){
+      side_bar.animate({"margin-left":0},500); 
+      side_bar.data("status",true);
+      return;
+    }else if(com==0){
+      side_bar.animate({"margin-left":"-240px"},500); 
+      side_bar.data("status",false);
+      return;
+    }
     if(!status){
       side_bar.animate({"margin-left":0},500); 
       side_bar.data("status",true);
@@ -71,7 +85,6 @@ page=(function(){
         type:"post",
         dataType:"json",
       }).done(function(data){
-          console.log(data);
           var ul=$("<ul/>",{"class":"datelist"});
           for(var i=0;i<data.length;i++){
             var li=$("<li/>",{"text":data[i].date+"--"+data[i].wordList.length});

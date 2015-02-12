@@ -12,7 +12,7 @@
     width:100%;
 }
 .showBox input:focus{
-    border:1px solid #ddd;
+    border:1px solid #efefef;
     outline:none;
 }
 .inputBox{
