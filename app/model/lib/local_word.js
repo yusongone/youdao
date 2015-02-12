@@ -19,16 +19,21 @@ var objId=new objectId();
 		var col=database.collection("word");
 			col.findOne({"word":json.word,"userId":json.userId},function(err,result1){
 					if(null==result1){
+            console.log("insert");
 						col.insert({"userId":json.userId,"_id":objId,"word":json.word,"trans":json.obj},function(err){
 							_addWordDate({userId:json.userId,wordId:objId},function(err){
-						poolMain.release(database);
+              updateSentence();
 							});
 						});
 					}else{
 						_addWordDate({userId:json.userId,wordId:result1._id},function(err,result2){
-						poolMain.release(database);
+            updateSentence();
 						});
 					};
+          function updateSentence(){
+						poolMain.release(database);
+				    col.update({"userId":json.userId,"word":json.word},{$addToSet:{"sentence":json.sentence}},function(err,result){});
+          }
 			});
 	});
 };
@@ -82,12 +87,24 @@ function _getDayWord(json,callback){
 function _getUserAllWord(json,callback){
 	poolMain.acquire(function(err,database){
 			var wdcol=database.collection("word");
-				wdcol.find({"userId":json.userId},{"_id":0,"word":1,"trans":1}).sort({"_id":-1}).toArray(function(err,result2){
+				wdcol.find({"userId":json.userId},{"_id":0,"sentence":1,"word":1,"trans":1}).sort({"_id":-1}).toArray(function(err,result2){
 					callback(err,result2);
 					poolMain.release(database);
 				});
   });
 }
+
+function _getDateList(json,callback){
+	poolMain.acquire(function(err,database){
+			var dtcol=database.collection("date");
+				dtcol.find({"userId":json.userId},{"_id":0}).toArray(function(err,result2){
+					callback(err,result2);
+					poolMain.release(database);
+				});
+  });
+  
+}
 exports.addWord=_addWord;
 exports.getDayWord=_getDayWord;
 exports.getUserAllWord=_getUserAllWord;
+exports.getDateList=_getDateList;

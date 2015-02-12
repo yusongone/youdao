@@ -20,6 +20,13 @@
 			<%}%>
 		</ul>
 		<%}%>
+    <% if(word.sentence){ %>
+      <% for(var i=0; i<word.sentence.length;i++){ %>
+        <div class="sentence">
+          <%= word.sentence[i] %>
+        </div>
+      <% } %>
+    <% } %>
 		<div class="btn getSound " data-word="<%=word.word%>"><i class="fa fa-spinner fa-spin icon_<%=word.word%>"></i></div>
 	<div>
 </li>

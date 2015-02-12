@@ -63,17 +63,17 @@ function getPathData(val){
         },
         dataType:"json",
         success:function(data){
-            console.log(data);
-			if(data.status=="fail"){
-				alert(data.message);
-				location.href="/login"
-				return;
-			}
-            getDataSuccess();
-            createList(data);
-            //getaudio(val);
-            }
-        });
+          console.log(data);
+          if(data.status=="fail"){
+            alert(data.message);
+            location.href="/login"
+            return;
+          }
+          getDataSuccess();
+          createList(data);
+          //getaudio(val);
+        }
+      });
 }
 
 function getDataSuccess(){

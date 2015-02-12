@@ -8,10 +8,4 @@ module.exports=function(app){
   app.use("/search",router);
 }
 
-router.get("/",function(req,res,next){
-  if(!req.session.userId){
-    res.redirect("/login");
-  }
-  res.render("search_page",{});
-});
 

@@ -2,7 +2,7 @@ var page;
 requirejs(["jquery"],function($){
 	$(document).ready(function(){	
 		page.bindEvent();
-	});
+  });
 });
 
 page=(function(){
@@ -42,8 +42,49 @@ page=(function(){
 			$("#"+$(this).attr("data-word"))[0].play();
 
 		});
+
+    $("#day").click(function(){
+      _getDateList();
+    });
+
+    $("#knob").click(function(){
+      _toggleSideBar();
+    });
+
 	}
+
+  function _toggleSideBar(){
+    var side_bar=$(".side_bar");
+    var status=side_bar.data("status");
+    if(!status){
+      side_bar.animate({"margin-left":0},500); 
+      side_bar.data("status",true);
+    }else{
+      side_bar.animate({"margin-left":"-240px"},500); 
+      side_bar.data("status",false);
+    }
+  }
+
+  function _getDateList(){
+    $.ajax({
+        url:"/query/getDateList",
+        type:"post",
+        dataType:"json",
+      }).done(function(data){
+          console.log(data);
+          var ul=$("<ul/>",{"class":"datelist"});
+          for(var i=0;i<data.length;i++){
+            var li=$("<li/>",{"text":data[i].date+"--"+data[i].wordList.length});
+            ul.append(li); 
+          }
+          $("#info_box").html("").append(ul);
+	    });
+  }
+
 	return {
-		bindEvent:_bindEvent
+		bindEvent:_bindEvent,
+		toggleSideBar:_toggleSideBar,
+    getDateList:_getDateList
 	}
+
 })();

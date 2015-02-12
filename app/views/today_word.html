@@ -19,6 +19,21 @@
           </div>
         </div>
         <div class="page">
+            <div class="side_bar">
+              <div class="content">
+                <ul class="side_nav">
+                  <li> 所有 </li>
+                  <li> 月 </li>
+                  <li> 星期 </li>
+                  <li id="day"> 日 </li>
+                </ul>
+                <div class="info_box" id="info_box">
+                </div>
+              </div>
+              <div class="knob" id="knob">
+                <i class="fa fa-th-list"></i>
+              </div>
+            </div>
             <ul class="showBox">
 				<%if(locals.wordList){%>
 					<%for(var i=0;i<wordList.length;i++){%>
@@ -28,6 +43,5 @@
 				<%}%>
             </ul>
         </div>
-        <div class="footer">翻译API来自于有道</div>
     </body>
 </html>

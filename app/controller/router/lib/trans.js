@@ -24,11 +24,14 @@ router.get("/get_voice",function(req,res,next){
 
 router.post("/getTranslateData",function(req,res){
   var requestString=req.body.q;
+  var requestSentence=req.body.sentence;
   if(!req.session.userId){
       res.send({"status":"fail","message":"login time out"});
       return;
   }
-  youdaoModel.getData(requestString,function(err,string){
+  youdaoModel.getData({
+    "requestString":requestString,
+  },function(err,string){
   var obj=JSON.parse(string);
       if(err){
        res.send({"status":"error"});
@@ -38,11 +41,26 @@ router.post("/getTranslateData",function(req,res){
       if(obj.basic){
         model.local_word.addWord({
           word:requestString,
+          sentence:requestSentence,
           obj:obj,
           userId:req.session.userId
         },function(){
       });
      }
   }); 
+});
+
+router.get("/word",function(req,res,next){
+  if(!req.session.userId){
+    res.redirect("/login");
+  }
+  res.render("search_page",{});
+});
+
+router.get("/sentence",function(req,res,next){
+  if(!req.session.userId){
+    res.redirect("/login");
+  }
+  res.render("sentence",{});
 });
 

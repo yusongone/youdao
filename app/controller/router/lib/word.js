@@ -28,6 +28,7 @@ router.get("/all",function(req,res,next){
     res.redirect("/login");
   }
   model.local_word.getUserAllWord({"userId":req.session.userId+""},function(err,result){
+    console.log(result);
     res.render("today_word",{
       "head":"abc",
       "wordList":result
