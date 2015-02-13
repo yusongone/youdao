@@ -22,11 +22,6 @@ page=(function(){
 		return audio;
 	}
 	function _bindEvent(){
-		$(".getSound").click(function(event){
-			event.stopPropagation();
-			$("#"+$(this).attr("data-word"))[0].play();
-
-		});
 
     $("#day").click(function(){
       _getDateList();
@@ -124,7 +119,12 @@ page=(function(){
           });
           $(this).data("open",1);
         };
+        return false;
 		  });
+		obj.find(".getSound").click(function(event){
+			event.stopPropagation();
+			$("#"+$(this).attr("data-word"))[0].play();
+		});
     }
   }
 
