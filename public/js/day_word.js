@@ -3,6 +3,10 @@ requirejs(["jquery","/js/vendor/ejs.js"],function($,ejs){
 	$(document).ready(function(){	
 		page.bindEvent();
     page.getDateList();
+    if(window.innerWidth<500){
+      page.toggleSideBar(1);
+      page.toggleSideBar(0);
+    }
   });
 });
 
