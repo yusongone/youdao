@@ -5,8 +5,22 @@ requirejs(["jquery"],function($){
 });
 
 function bindEvent(){
-  $("#searchInput").keyup(function(){
-    var origin_text=" "+$(this).text()+" ";
+  trans();
+  $("#searchInput").keydown(function(event){
+    if($(this).text()==""){
+      this.innerHTML="";
+      $(this).blur();
+    }
+  });
+  $("#searchInput").keydown(function(event){
+    if(event.keyCode==13){
+      trans();
+      return false;
+    }
+  });
+  function trans(){
+    console.log("abc");
+    var origin_text=" "+$("#searchInput").text()+" ";
     text=origin_text.replace(/,/g," , ");
     text=text.replace(/\./g," . ");
     var ary = getClearWord(text);
@@ -17,14 +31,14 @@ function bindEvent(){
     }
       text=text.replace(/{/g,"<strong>");
       text=text.replace(/}/g,"</strong>");
-    this.innerHTML=text;
-    $(this).find("strong").click(function(){
+    $("#searchInput")[0].innerHTML=text;
+    $("#searchInput").find("strong").click(function(){
       $("#searchInput").find("strong").removeClass("big");
       $(this).addClass("big");
       var word=$(this).text();
       getData(word,origin_text);
     });
-  });
+  }
 }
 
 function Trim(text){

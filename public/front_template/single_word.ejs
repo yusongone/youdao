@@ -1,0 +1,33 @@
+<li class="one_word">
+	<span class="key"><%= word.word %><i class="fa fa-plus-square-o"></i></span>
+	<div class="trans">
+		<% if(word.trans.basic){ %>	
+		<ul class="basic">
+			<% for(var i=0;i<word.trans.basic.explains.length;i++){ var explains=word.trans.basic.explains[i]; %>
+				<li>
+					<span><%= explains%></span>
+				</li>
+			<%}%>
+		</ul>
+		<%}%>
+		<%if(word.trans.web){%>	
+		<ul class="web">
+			<%for(var i=0;i<word.trans.web.length;i++){ var web=word.trans.web[i];%>
+				<li>
+					<span class="web_key"><%= web.key%>:</span>
+          adfsdfsasdfasdf;
+					<span><%= web.value%></span>
+				</li>
+			<%}%>
+		</ul>
+		<%}%>
+    <% if(word.sentence){ %>
+      <% for(var i=0; i<word.sentence.length;i++){ %>
+        <div class="sentence">
+          <%= word.sentence[i] %>
+        </div>
+      <% } %>
+    <% } %>
+		<div class="btn getSound " data-word="<%=word.word%>"><i class="fa fa-spinner fa-spin icon_<%=word.word%>"></i></div>
+	<div>
+</li>

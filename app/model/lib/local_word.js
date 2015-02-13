@@ -58,10 +58,10 @@ function _addWordDate(json,callback){
 	});
 }
 
-function _getDayWord(json,callback){
+function _getWordList(json,callback){
 	poolMain.acquire(function(err,database){
 		var dateObj=new Date();
-		var d=dateObj.getFullYear()+"-"+(1+dateObj.getMonth())+"-"+dateObj.getDate();
+		var d=json.date||dateObj.getFullYear()+"-"+(1+dateObj.getMonth())+"-"+dateObj.getDate();
 		var col=database.collection("date");
 		col.findOne({"date":d,"userId":json.userId},{"wordList":1,"_id":0},function(err,result){
 			if(!result){
@@ -105,6 +105,6 @@ function _getDateList(json,callback){
   
 }
 exports.addWord=_addWord;
-exports.getDayWord=_getDayWord;
+exports.getWordList=_getWordList;
 exports.getUserAllWord=_getUserAllWord;
 exports.getDateList=_getDateList;

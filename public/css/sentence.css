@@ -10,10 +10,17 @@
   border-radius: 3px;
   font-size: 16px;
   padding: 8px;
+  background:#fff;
 }
 
 .trans_btn{
   float:right;
+  margin-top: -2px;
+  position: relative;
+  z-index: -1;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  margin-right: 10px;
 }
 .trans_input strong:hover{
   color:red;
@@ -78,3 +85,4 @@
     width:100%;
     text-align:center;
 }
+
