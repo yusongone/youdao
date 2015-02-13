@@ -9,13 +9,12 @@ function _auth(json,callback){
 		var md5=crypto.createHash("md5");
 		var md5Pass=md5.update(pass).digest("base64");
 		col.find({"account":json.id,"pass":md5Pass}).toArray(function(err,docAry){
-			var id;
+      var json={};
 			if(docAry.length>0){
-				id=docAry[0]._id;
-			}else{
-				id="";
+				json.id=docAry[0]._id;
+				json.name=docAry[0].account;
 			}
-			callback(err,id);
+			callback(err,json);
 			poolMain.release(database);
 		});
 	});

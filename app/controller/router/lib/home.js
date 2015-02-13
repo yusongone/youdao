@@ -10,7 +10,7 @@ module.exports=function(app){
 }
 
 router.get("/",function(req,res,next){
-    res.redirect("/search");
+    res.redirect("/trans/word/");
 });
 
 
@@ -19,14 +19,18 @@ router.get("/login",function(req,res,next){
   if(req.session.userId){
     res.redirect("/");
   }
-  res.render("login",{
-  });
+  res.render("login",{});
 
+});
+
+router.get("/register",function(req,res,next){
+  req.session.userId=null;
+  res.render("register");
 });
 
 router.get("/logout",function(req,res,next){
   req.session.userId=null;
-  res.send("logout");
+  res.redirect("/login");
 });
 
 
@@ -38,8 +42,8 @@ router.post("/login",function(req,res){
       res.send({"status":"error"});
     }
     if(data){
-      req.session.userId=data;
-      console.log(req.session);
+      req.session.userId=data.id;
+      req.session.userName=data.name;
       res.send({"status":"ok"});
     }else{
       res.send({"status":"auth fail"});

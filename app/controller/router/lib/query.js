@@ -13,7 +13,6 @@ router.post("/getDateList",function(req,res,next){
     res.redirect("/login");
   }
   model.local_word.getDateList({"userId":req.session.userId+""},function(err,result){
-    console.log(result);
     if(!err){
       res.send(result);
     }else{
@@ -28,7 +27,6 @@ router.post("/getWordList",function(req,res,next){
   }
   var date=req.body.date;
   model.local_word.getWordList({"date":date,"userId":req.session.userId+""},function(err,result){
-    console.log(result);
     if(!err){
       res.send(result);
     }else{

@@ -70,8 +70,11 @@
   cursor: pointer;
   border-bottom: 1px solid rgba(100,100,100,0.05);
 }
+.info_box .datelist li.active{
+  background:rgba(100,100,100,0.08);
+}
 .info_box .datelist li:hover{
-  background:rgba(100,100,100,0.05);
+  background: rgba(100,100,100,0.08);
 }
 .showBox .one_word{
 	overflow: hidden;
@@ -167,7 +170,6 @@
   border-right: 1px solid rgba(100,100,100,0.4);
   line-height: 15px;
   cursor:pointer;
-  color:#333;
 }
 .side_nav li:last-child{
   border:none;

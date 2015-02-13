@@ -22,7 +22,6 @@ page=(function(){
 		return audio;
 	}
 	function _bindEvent(){
-
     $("#day").click(function(){
       _getDateList();
     });
@@ -68,14 +67,18 @@ page=(function(){
           var ul=$("<ul/>",{"class":"datelist"});
           for(var i=0;i<data.length;i++){
             var li=$("<li/>",{"text":data[i].date+"--"+data[i].wordList.length}).data("val",data[i].date);
+            if(i==0){
+              li.addClass("active");
+            }
             li.click(function(){
+              $(".datelist li").removeClass("active");
+              $(this).addClass("active");
               page.getWordListByDate($(this).data("val"));
             });
             ul.append(li); 
           }
           $("#info_box").html("").append(ul);
-
-
+          page.getWordListByDate(data[0].date);
 	    });
   }
 
@@ -99,33 +102,32 @@ page=(function(){
     for(var i=0;i<data.length;i++){
       var html=ejstemp.render({"word":data[i]});      
       var obj=$(html);
-      _bindEvent(obj);
+      _oneWordEvent(obj);
       $(".showBox").append(obj);
     }
-
-    function _bindEvent(obj){
-      obj.click(function(){
-        var ow=this;
-        if($(this).data("open")){
-          $(this).find(".trans").slideUp(function(){
-            $(ow).find(".fa-minus-square-o").addClass("fa-plus-square-o").removeClass("fa-minus-square-o");
-          });
-          $(this).data("open",0);
-        }else{
-          var audio=createVoice($(ow).find(".key").text());
-          $(ow).append(audio);
-          $(this).find(".trans").slideDown(function(){
-            $(ow).find(".fa-plus-square-o").removeClass("fa-plus-square-o").addClass("fa-minus-square-o");
-          });
-          $(this).data("open",1);
-        };
-        return false;
-		  });
-		obj.find(".getSound").click(function(event){
-			event.stopPropagation();
-			$("#"+$(this).attr("data-word"))[0].play();
-		});
-    }
+  }
+  function _oneWordEvent(obj){
+    obj.click(function(){
+      var ow=this;
+      if($(this).data("open")){
+        $(this).find(".trans").slideUp(function(){
+          $(ow).find(".fa-minus-square-o").addClass("fa-plus-square-o").removeClass("fa-minus-square-o");
+        });
+        $(this).data("open",0);
+      }else{
+        var audio=createVoice($(ow).find(".key").text());
+        $(ow).append(audio);
+        $(this).find(".trans").slideDown(function(){
+          $(ow).find(".fa-plus-square-o").removeClass("fa-plus-square-o").addClass("fa-minus-square-o");
+        });
+        $(this).data("open",1);
+      };
+      return false;
+    });
+    obj.find(".getSound").click(function(event){
+      event.stopPropagation();
+      $("#"+$(this).attr("data-word"))[0].play();
+    });
   }
 
 	return {

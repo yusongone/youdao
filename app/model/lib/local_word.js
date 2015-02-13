@@ -97,7 +97,7 @@ function _getUserAllWord(json,callback){
 function _getDateList(json,callback){
 	poolMain.acquire(function(err,database){
 			var dtcol=database.collection("date");
-				dtcol.find({"userId":json.userId},{"_id":0}).toArray(function(err,result2){
+				dtcol.find({"userId":json.userId},{"_id":0}).sort({"_id":-1}).toArray(function(err,result2){
 					callback(err,result2);
 					poolMain.release(database);
 				});

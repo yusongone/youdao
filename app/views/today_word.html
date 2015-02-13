@@ -28,12 +28,12 @@
               </div>
             </div>
             <ul class="showBox">
-				<%if(locals.wordList){%>
-					<%for(var i=0;i<wordList.length;i++){%>
-						<% word=wordList[i] %>
-						<%include /ejs/word_li%>
-					<%}%>
-				<%}%>
+              <%if(locals.wordList){%>
+                <%for(var i=0;i<wordList.length;i++){%>
+                  <% word=wordList[i] %>
+                  <%include /ejs/word_li%>
+                <%}%>
+              <%}%>
             </ul>
         </div>
     </body>

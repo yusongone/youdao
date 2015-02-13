@@ -54,13 +54,13 @@ router.get("/word",function(req,res,next){
   if(!req.session.userId){
     res.redirect("/login");
   }
-  res.render("search_page",{});
+  res.render("search_page",{"username":req.session.userName});
 });
 
 router.get("/sentence",function(req,res,next){
   if(!req.session.userId){
     res.redirect("/login");
   }
-  res.render("sentence",{});
+  res.render("sentence",{"username":req.session.userName});
 });
 
