@@ -174,3 +174,20 @@
 .side_nav li:last-child{
   border:none;
 }
+.count{
+  float: right;
+  border: 1px solid rgb(255, 221, 0);
+  width: 22px;
+  height: 22px;
+  line-height: 20px;
+  background: rgb(255, 248, 202);
+  text-align: center;
+  border-radius: 15px;
+  font-size: 12px;
+  margin-right:10px;
+}
+.loading{
+  float:right;
+  margin-right:30px;
+  line-height:25px;
+}

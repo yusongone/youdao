@@ -66,14 +66,18 @@ page=(function(){
       }).done(function(data){
           var ul=$("<ul/>",{"class":"datelist"});
           for(var i=0;i<data.length;i++){
-            var li=$("<li/>",{"text":data[i].date+"--"+data[i].wordList.length}).data("val",data[i].date);
+            var li=$("<li/>",{"text":data[i].date}).data("val",data[i].date);
+            var span=$("<span/>",{"class":"count","text":data[i].wordList.length});
+            li.append(span);
             if(i==0){
               li.addClass("active");
             }
             li.click(function(){
               $(".datelist li").removeClass("active");
               $(this).addClass("active");
-              page.getWordListByDate($(this).data("val"));
+              var loading=$("<i/>",{"class":"fa fa-spinner fa-spin fa-fw loading"})
+              $(this).append(loading);
+              page.getWordListByDate($(this).data("val"),loading);
             });
             ul.append(li); 
           }
@@ -82,7 +86,7 @@ page=(function(){
 	    });
   }
 
-  function _getWordListByDate(date){
+  function _getWordListByDate(date,loading){
     var ejstemp=new EJS({url:"/front_template/single_word.ejs"});
     $.ajax({
         url:"/query/getWordList",
@@ -93,6 +97,8 @@ page=(function(){
         dataType:"json",
       }).done(function(data){
         _createWordList(ejstemp,data)
+		    page.toggleSideBar(0);
+        loading?loading.remove():"";
 	    });
   }
 
