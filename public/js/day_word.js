@@ -1,6 +1,7 @@
 var page;
-requirejs(["jquery","/js/vendor/ejs.js"],function($,ejs){
+requirejs(["jquery","common","/js/vendor/ejs.js"],function($,common,ejs){
 	$(document).ready(function(){	
+    Common.init();
 		page.bindEvent();
     page.getDateList();
     if(window.innerWidth<500){
