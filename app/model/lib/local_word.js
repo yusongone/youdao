@@ -105,9 +105,19 @@ function _getDateList(json,callback){
 					poolMain.release(database);
 				});
   });
-  
+}
+
+function _getWordData(json,callback){
+	poolMain.acquire(function(err,database){
+			var dtcol=database.collection("word");
+				dtcol.find({"userId":json.userId,"word":json.word},{"_id":0}).sort({"_id":-1}).toArray(function(err,result2){
+					callback(err,result2);
+					poolMain.release(database);
+				});
+  });
 }
 exports.addWord=_addWord;
 exports.getWordList=_getWordList;
 exports.getUserAllWord=_getUserAllWord;
 exports.getDateList=_getDateList;
+exports.getWordData=_getWordData;

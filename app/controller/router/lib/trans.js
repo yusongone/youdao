@@ -1,6 +1,7 @@
 var router=require("express").Router();
 var model=require("../../../model");
 var youdaoModel=model.youdao;
+var wordModel=model.local_word;
 var users=model.users;
 var word_sound=model.word_sound;
 
@@ -33,8 +34,15 @@ router.post("/getTranslateData",function(req,res){
       res.send({"status":"fail","message":"login time out"});
       return;
   }
+  _getWordfromYoudao({res:res,req:req,word:requestString,sentence:requestSentence});
+});
+
+
+function _getWordfromYoudao(json){
+  var res=json.res;
+  var req=json.req;
   youdaoModel.getData({
-    "requestString":requestString,
+    "requestString":json.word,
   },function(err,string){
   var obj=JSON.parse(string);
       if(err){
@@ -44,15 +52,15 @@ router.post("/getTranslateData",function(req,res){
       res.send(string); 
       if(obj.basic){
         model.local_word.addWord({
-          word:requestString,
-          sentence:requestSentence,
+          word:json.word,
+          sentence:json.sentence,
           obj:obj,
           userId:req.session.userId
         },function(){
       });
      }
   }); 
-});
+}
 
 router.get("/word",function(req,res,next){
   if(!req.session.userId){

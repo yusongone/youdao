@@ -21,9 +21,6 @@ input:focus{
     border:1px solid #999;
     outline:none;
 }
-.bodyover{
-	overflow:hidden;
-}
 .btn{
     border-radius:2px;
     float:left;
