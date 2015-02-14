@@ -48,3 +48,10 @@ body{
     margin-top:8px;
     margin-left:15px;
 }
+.sorry{
+  font-size: 12px;
+  margin-top: 10px;
+  float: left;
+  margin-bottom: 20px;
+  text-indent: 18px;
+}

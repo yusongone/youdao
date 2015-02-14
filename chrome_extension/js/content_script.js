@@ -1,1 +1,0 @@
-$("body").attr("background","red");
