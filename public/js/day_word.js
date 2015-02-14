@@ -46,19 +46,27 @@ page=(function(){
     var side_bar=$(".side_bar");
     var status=side_bar.data("status");
     if(com==1){
-      side_bar.animate({"margin-left":0},500); 
+      side_bar.animate({"margin-left":0},500,function(){
+        $("#knob i").addClass("fa-chevron-left").removeClass("fa-chevron-right");
+      }); 
       side_bar.data("status",true);
       return;
     }else if(com==0){
-      side_bar.animate({"margin-left":"-240px"},500); 
+      side_bar.animate({"margin-left":"-230px"},500,function(){
+        $("#knob i").removeClass("fa-chevron-left").addClass("fa-chevron-right");
+      }); 
       side_bar.data("status",false);
       return;
     }
     if(!status){
-      side_bar.animate({"margin-left":0},500); 
+      side_bar.animate({"margin-left":0},500,function(){
+        $("#knob i").addClass("fa-chevron-left").removeClass("fa-chevron-right");
+      }); 
       side_bar.data("status",true);
     }else{
-      side_bar.animate({"margin-left":"-240px"},500); 
+      side_bar.animate({"margin-left":"-230px"},500,function(){
+        $("#knob i").removeClass("fa-chevron-left").addClass("fa-chevron-right");
+      }); 
       side_bar.data("status",false);
     }
   }
