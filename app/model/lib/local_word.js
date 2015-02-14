@@ -21,15 +21,17 @@ var objId=new objectId();
 			col.findOne({"word":json.word,"userId":json.userId},function(err,result1){
 					if(null==result1){
             console.log("insert");
-						col.insert({"userId":json.userId,"_id":objId,"word":json.word,"trans":json.obj},function(err){
+						col.insert({"userId":json.userId,"_id":objId,"word":json.word,"trans":json.obj,"searchCount":1},function(err){
 							_addWordDate({userId:json.userId,wordId:objId},function(err){
               updateSentence();
 							});
 						});
 					}else{
-						_addWordDate({userId:json.userId,wordId:result1._id},function(err,result2){
-            updateSentence();
-						});
+						col.update({"userId":json.userId,"word":json.word},{$inc:{"searchCount":1}},function(err){
+              _addWordDate({userId:json.userId,wordId:result1._id},function(err,result2){
+              updateSentence();
+              });
+            });
 					};
           function updateSentence(){
 						poolMain.release(database);
