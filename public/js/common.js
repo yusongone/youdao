@@ -14,19 +14,19 @@
       var side_bar=$(".menuBar");
       var status=side_bar.data("status");
       if(com==1){
-        side_bar.animate({"left":0},500); 
+        side_bar.animate({"top":0},500); 
         side_bar.data("status",true);
         return;
       }else if(com==0){
-        side_bar.animate({"left":"-80%"},500); 
+        side_bar.animate({"top":"-100%"},500); 
         side_bar.data("status",false);
         return;
       }
       if(!status){
-        side_bar.animate({"left":0},500); 
+        side_bar.animate({"top":0},500); 
         side_bar.data("status",true);
       }else{
-        side_bar.animate({"left":"-80%"},500); 
+        side_bar.animate({"top":"-100%"},500); 
         side_bar.data("status",false);
       }
     };

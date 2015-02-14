@@ -85,4 +85,8 @@
     width:100%;
     text-align:center;
 }
-
+.remind{
+  font-size: 10px;
+  color: #999;
+  line-height: 30px;
+}

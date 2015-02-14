@@ -1,16 +1,14 @@
-requirejs(["jquery"],function($){
+requirejs(["jquery","common","/js/vendor/ejs.js"],function($,common,ejs){
     $(document).ready(function(){
+      Common.init();
       bindEvent();
     });
 });
 
 function bindEvent(){
-  trans();
-  $("#searchInput").keydown(function(event){
-    if($(this).text()==""){
-      this.innerHTML="";
-      $(this).blur();
-    }
+  $("#searchBtn").click(function(){
+      trans();
+      return false;
   });
   $("#searchInput").keydown(function(event){
     if(event.keyCode==13){
@@ -19,10 +17,12 @@ function bindEvent(){
     }
   });
   function trans(){
-    console.log("abc");
     var origin_text=" "+$("#searchInput").text()+" ";
     text=origin_text.replace(/,/g," , ");
     text=text.replace(/\./g," . ");
+    text=text.replace(/\;/g," ; ");
+    text=text.replace(/\'/g," ' ");
+    text=text.replace(/\"/g,' " ');
     var ary = getClearWord(text);
     for(var i = 0; i < ary.length; i++){
       var a=ary[i];

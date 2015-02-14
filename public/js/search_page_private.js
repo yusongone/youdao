@@ -1,5 +1,6 @@
-requirejs(["jquery"],function($){
+requirejs(["jquery","common","/js/vendor/ejs.js"],function($,common,ejs){
     $(document).ready(function(){
+        Common.init();
         bindEvent();
     });
 });
@@ -12,21 +13,7 @@ function bindEvent(){
             getPathData($("#searchInput").val());
         }
     });
-    $("#menu").click(function(event){
-		if($(".overflow").length){return;}
-		var menu=this;
-		$(this).addClass("active");
-		var od=$("<div/>",{"class":"overflow"})
-			$("body").append(od);
-		showMenu(1);
-		od.click(function(){
-			showMenu(0,function(){
-				$(menu).removeClass("active");
-			});
-			od.remove();
-		});
 		$("body").addClass("bodyover");
-	});
 }
 function showMenu(action,callback){
 	if(action){
