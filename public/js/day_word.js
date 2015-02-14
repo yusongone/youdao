@@ -19,7 +19,6 @@ page=(function(){
 		var source=$("<source/>");
 		audio.append(source);
 		source[0].src=src;
-		window.ff=audio[0];
 		audio[0].oncanplaythrough=function(){
 			$(".icon_"+word).removeClass("fa-spinner").removeClass("fa-spin").addClass("fa-volume-up");	
 			callback?callback():"";
@@ -134,7 +133,7 @@ page=(function(){
         });
         $(this).data("open",0);
       }else{
-        var audio=createVoice($(ow).find(".key").text());
+        var audio=createVoice($(ow).find(".word").text());
         $(ow).append(audio);
         $(this).find(".trans").slideDown(function(){
           $(ow).find(".fa-plus-square-o").removeClass("fa-plus-square-o").addClass("fa-minus-square-o");
