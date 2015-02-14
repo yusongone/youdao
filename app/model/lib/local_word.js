@@ -17,6 +17,7 @@ function _addWord(json,callback){
 var objId=new objectId();
 	poolMain.acquire(function(err,database){
 		var col=database.collection("word");
+      json.word=json.word.toLowerCase();
 			col.findOne({"word":json.word,"userId":json.userId},function(err,result1){
 					if(null==result1){
             console.log("insert");
