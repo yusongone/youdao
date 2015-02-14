@@ -1,0 +1,60 @@
+.spider_transBox *{
+  box-sizing: border-box;
+  font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.spider_transBox ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.spider_transBox{
+  padding:30px 20px;
+  width:300px;
+  height:auto;
+  border:1px solid #ddd;
+  position: fixed;
+  top: -100%;
+  margin-left:-150px;
+  left: 50%;
+  min-height: 70px;
+  background: #fff;
+  color:#666;
+  overflow-y: scroll;
+  max-height: 100%;
+  z-index:999999999999;
+}
+.spider_loading{
+  width: 100%;
+  text-align: center;
+  display: block;
+  margin-top: 10px;
+}
+.spider_content{
+}
+
+.spider_content .spider_explains{
+  margin:10px 20px;
+}
+.spider_content .spider_explains li{
+  margin:10px 0;
+}
+.spider_content .spider_web{
+  margin-top:15px;
+}
+
+.spider_content .spider_query{
+  font-weight:bold;
+  font-size:16px;
+}
+.spider_content .spider_web_title{
+  border-top: 1px solid #ddd;
+  font-weight:bold;
+  padding-top: 10px;
+  margin-top:20px;
+}
+.spider_content .spider_web .spider_web_child{
+  margin-left:20px;
+}
+.spider_content  .spider_web_child li{
+  margin:10px 0;
+}
