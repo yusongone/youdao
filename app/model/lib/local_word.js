@@ -78,7 +78,7 @@ function _getWordList(json,callback){
 					ary.push(new objectId(wl[i]));
 				}
 			var wdcol=database.collection("word");
-				wdcol.find({"_id":{$in:ary}},{"_id":0,"word":1,"trans":1}).sort({"_id":-1}).toArray(function(err,result2){
+				wdcol.find({"_id":{$in:ary}},{"_id":0,"word":1,"trans":1,"searchCount":1}).sort({"_id":-1}).toArray(function(err,result2){
 					callback(err,result2);
 					poolMain.release(database);
 				});

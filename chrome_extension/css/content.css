@@ -35,8 +35,11 @@
 .spider_content .spider_explains{
   margin:10px 20px;
 }
-.spider_content .spider_explains li{
+.spider_content .spider_explains li,
+.spider_content .spider_web li{
   margin:10px 0;
+  font-size: 14px;
+  line-height: 18px;
 }
 .spider_content .spider_web{
   margin-top:15px;
