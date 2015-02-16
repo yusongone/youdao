@@ -12,10 +12,11 @@ requirejs(["jquery","common","/js/vendor/ejs.js"],function($,common,ejs){
 });
 
 page=(function(){
+  var Static={};
 	function createVoice(word,callback){
 		var src="/trans/get_voice/?word="+word;
 		//var src="http://dict.youdao.com/dictvoice?audio="+word;
-		var audio=$("<audio/>",{"autoplay":"true","controls":1,"id":word,"style":"display:none;"});
+		var audio=$("<audio/>",{"controls":1,"id":word,"style":"display:none;"});
 		var source=$("<source/>");
 		audio.append(source);
 		source[0].src=src;
@@ -29,6 +30,27 @@ page=(function(){
     $("#day").click(function(){
       _getDateList();
     });
+    
+    $("#large").click(function(){
+      $(".wordListBox").addClass("large");
+      Static.WordList.slideshow.changePage(0);
+      return false;
+    });
+
+    $("#list").click(function(){
+      Static.WordList.slideshow.clearTop();
+      $(".wordListBox").removeClass("large");
+      return false;
+    });
+
+      $("#prev").click(function(){
+        Static.WordList.slideshow.changePage(-1);
+        return false;
+      });
+      $("#next").click(function(){
+        Static.WordList.slideshow.changePage(1);
+        return false;
+      });
 
     $("#knob").click(function(){
       _toggleSideBar();
@@ -69,7 +91,7 @@ page=(function(){
       side_bar.data("status",false);
     }
   }
-
+  
   function _getDateList(){
     $.ajax({
         url:"/query/getDateList",
@@ -108,45 +130,101 @@ page=(function(){
         },
         dataType:"json",
       }).done(function(data){
-        _createWordList(ejstemp,data)
+        Static.WordList.createList(ejstemp,data)
 		    page.toggleSideBar(0);
         loading?loading.remove():"";
 	    });
   }
+  
+  (function(){
+    var WordList={
+        slideshow:null,
+        data:null
+    };
+      WordList.createList=function(ejstemp,data){
+        $("#wordList").html("");
+        for(var i=0;i<data.length;i++){
+          var html=ejstemp.render({"word":data[i]});      
+          var obj=$(html);
+          if(i==0){obj.addClass("top")}
+          this.bindEvent(obj);
+          $("#wordList").append(obj);
+        }
+        var ss=new Static.Slideshow();
+        ss.init();
+        this.data=data;
+        this.slideshow=ss;
+      }
+      WordList.bindEvent=function(obj){
+        var that=this;
+          obj.click(function(){
+            that.slideshow.activeObj=obj;
+            var ow=this;
+            if($(this).data("open")){
+              $(this).find(".trans").slideUp(function(){
+                $(ow).find(".fa-minus-square-o").addClass("fa-plus-square-o").removeClass("fa-minus-square-o");
+              });
+              $(this).data("open",0);
+            }else{
+              $(this).find(".trans").slideDown(function(){
+                $(ow).find(".fa-plus-square-o").removeClass("fa-plus-square-o").addClass("fa-minus-square-o");
+              });
+              $(this).data("open",1);
+            };
+            return false;
+          });
+          obj.find(".getSound").click(function(event){
+            event.stopPropagation();
+              var audio=createVoice(obj.find(".word").text());
+              obj.append(audio);
+            $("#"+$(this).attr("data-word"))[0].play();
+          });
+        }
+    Static.WordList=WordList;
+  })();
 
 
-  function _createWordList(ejstemp,data){
-      $(".showBox").html("");
-    for(var i=0;i<data.length;i++){
-      var html=ejstemp.render({"word":data[i]});      
-      var obj=$(html);
-      _oneWordEvent(obj);
-      $(".showBox").append(obj);
+
+  (function(){
+
+
+    function slideshow(){
+      this.obj_collection=$("#wordList .one_word");
+      this.activeObj=this.obj_collection.eq(0);
+      this.topObj=this.activeObj;
+      this.length=this.obj_collection.length;
+      var that=this;
+      that.reTop();
+      $(window).resize(function(){
+        that.reTop();
+      });
     }
-  }
-  function _oneWordEvent(obj){
-    obj.click(function(){
-      var ow=this;
-      if($(this).data("open")){
-        $(this).find(".trans").slideUp(function(){
-          $(ow).find(".fa-minus-square-o").addClass("fa-plus-square-o").removeClass("fa-minus-square-o");
-        });
-        $(this).data("open",0);
-      }else{
-        var audio=createVoice($(ow).find(".word").text());
-        $(ow).append(audio);
-        $(this).find(".trans").slideDown(function(){
-          $(ow).find(".fa-plus-square-o").removeClass("fa-plus-square-o").addClass("fa-minus-square-o");
-        });
-        $(this).data("open",1);
-      };
-      return false;
-    });
-    obj.find(".getSound").click(function(event){
-      event.stopPropagation();
-      $("#"+$(this).attr("data-word"))[0].play();
-    });
-  }
+    slideshow.prototype.init=function(){
+      var ssTag=$("#wordList");
+      this.boxObj=ssTag;
+      //WordList.activeObj.show();
+    }
+    slideshow.prototype.changePage=function(dir){
+      var index=this.activeObj.index();
+      if((index==0&&dir<0)||(index==this.length-1&&dir>0)){
+        return;
+      }
+      this.activeObj=this.obj_collection.eq(index+dir);
+      this.reTop();
+      if(index==0&&dir<0){ return; }
+      if(index==this.length-1&&dir>0){ return; }
+    } 
+    slideshow.prototype.reTop=function(){
+      var index=this.activeObj.index();
+      $("#count_nav").html((1+index)+"/"+this.length);
+      $("#wordList")[0].scrollTop=0;
+      this.topObj.animate({"margin-top":(index)*-($("#wordList").height())+"px"},500);
+    }
+    slideshow.prototype.clearTop=function(){
+      this.topObj.css({"margin-top":"0px"});
+    }
+    Static.Slideshow=slideshow;
+  })();
 
 	return {
 		bindEvent:_bindEvent,

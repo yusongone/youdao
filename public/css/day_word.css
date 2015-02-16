@@ -7,7 +7,7 @@
   width: 800px;
   position: absolute;
   top: 0;
-  padding-top: 55px;
+  padding-top: 50px;
   left: 50%;
   height: 100%;
   margin:0;
@@ -28,10 +28,21 @@
     padding-top:45px;
   }
 }
-.showBox{
+.wordListBox{
+  height: 100%;
+  padding-top: 35px;
+  overflow:hidden;
+}
+.wordListBox .wordBar{
+  width:100%; 
+  height:35px;
+  margin-top:-35px;
+  background:#ddd;
+}
+.wordListBox ul{
 	font-size:14px;
   height:100%;
-  overflow-y:auto;
+  overflow-y:scroll;
 }
 .side_bar{
   margin-left: -230px;
@@ -40,6 +51,7 @@
   float: left;
   position:relative;
   padding-right:10px;
+  z-index:9;
 }
 @media(max-width:500px){
   .side_bar{
@@ -78,7 +90,7 @@
 .info_box .datelist li:hover{
   background: rgba(100,100,100,0.08);
 }
-.showBox .one_word{
+.wordListBox .one_word{
 	overflow: hidden;
 	margin: 0 auto;
 	margin-bottom:10px;
@@ -129,14 +141,15 @@
 	color:#666;
 	font-weight:bold;
 }
-.getSound{
-	float:right;
-	margin:10px 0px;
+.getSoundBox{
+  float:left;
+  width:100%;
 }
-@media (max-width:600px){
-  .getSound{
-    margin-right:20px;
-  }
+.getSound{
+  display: block;
+  float: none;
+  width: 90px;
+	margin:20px auto;
 }
 .getSound .fa{
 	line-height:20px;
@@ -216,4 +229,94 @@
   float:right;
   margin-right:30px;
   line-height:25px;
+}
+.buttonBox{
+  float:right;
+  margin-right:15px;
+}
+.buttonBox .fa{
+  cursor:pointer;
+  font-size: 18px;
+  line-height: 26px;
+  padding: 1px 5px 0;
+  margin: 0 3px;
+  margin-top: 4px;
+  border-radius: 3px;
+  color: rgb(255, 221, 0);
+  background: #bbb;
+}
+
+.large{
+  position:relative;
+}
+
+.large .one_word{
+  position: relative;
+  width: 100%;
+  background: #fff;
+  padding: 20px;
+  min-height: 100%;
+  height: 100%;
+  overflow: scroll;
+  margin:0;
+}
+.large .wordList{
+  overflow:hidden;
+}
+.large .key{
+  background:none;
+}
+.large .faBox{
+  display:none;
+}
+.large .trans{
+  display:block;
+}
+
+.prev_next{
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  margin-top: -100px;
+  display: none;
+  width: 50px;
+  right: 0;
+  bottom: 30px;
+  text-align:center;
+}
+.prev_next .fa{
+  font-size: 32px;
+  line-height: 50px;
+  color:rgba(0,0,0,0.2);
+}
+.prev_next .fa:hover{
+  color:rgba(0,0,0,0.3);
+}
+@media(max-width:500px){
+  .prev_next .fa{
+    font-size: 44px;
+  }
+  .prev_next{
+    right:10px;
+  }
+}
+.count_nav{
+  width: 40px;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: -35px;
+  height: 35px;
+  line-height: 35px;
+  display:none;
+}
+.large .count_nav{
+  display:block;
+}
+.large .prev_next{
+  display:block;
+}
+.prev,.next{
+  float:left;
+  width:50px;
+  height:50px;
 }
