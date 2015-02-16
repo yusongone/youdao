@@ -234,6 +234,7 @@ page=(function(){
     } 
     slideshow.prototype.reTop=function(){
       var index=this.activeObj.index();
+      this.activeObj[0].scrollTop=0;
       $("#count_nav").html((1+index)+"/"+this.length);
       $("#wordList")[0].scrollTop=0;
       this.topObj.animate({"margin-top":(index)*-($("#wordList").height())+"px"},500);
