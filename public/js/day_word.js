@@ -33,11 +33,14 @@ page=(function(){
     
     $("#large").click(function(){
       $(".wordListBox").addClass("large");
+      Static.WordList.status="large";
+      $(".trans").removeAttr("style");
       Static.WordList.slideshow.changePage(0);
       return false;
     });
 
     $("#list").click(function(){
+      Static.WordList.status="list";
       Static.WordList.slideshow.clearTop();
       $(".wordListBox").removeClass("large");
       return false;
@@ -139,6 +142,8 @@ page=(function(){
   (function(){
     var WordList={
         slideshow:null,
+        status:"large",//default large model
+        childList:[], 
         data:null
     };
       WordList.createList=function(ejstemp,data){
@@ -146,6 +151,7 @@ page=(function(){
         for(var i=0;i<data.length;i++){
           var html=ejstemp.render({"word":data[i]});      
           var obj=$(html);
+          this.childList.push(obj);
           if(i==0){obj.addClass("top")}
           this.bindEvent(obj);
           $("#wordList").append(obj);
@@ -155,16 +161,36 @@ page=(function(){
         this.data=data;
         this.slideshow=ss;
       }
+      WordList.childHandler=function(obj){
+        console.log(obj.find(".trans")[0].style.display);
+            if(obj.find(".trans")[0].style.display=="block"){
+                obj.find(".trans").slideUp(function(){
+                obj.find(".fa-minus-square-o").addClass("fa-plus-square-o").removeClass("fa-minus-square-o");
+              });
+                obj.data("open",0);
+            }else{
+                obj.find(".trans").slideDown(function(){
+                obj.find(".fa-plus-square-o").removeClass("fa-plus-square-o").addClass("fa-minus-square-o");
+              });
+               obj.data("open",1);
+            };
+            return false;
+      }
       WordList.bindEvent=function(obj){
         var that=this;
         var touchDir=0;
         var touchScroll=0;
-
           obj[0].addEventListener("touchstart",function(event){
+            if(that.status=="list"){
+              return;
+            }
             touchDir=event.changedTouches[0].pageY;
             touchScroll=this.scrollTop;
           },true);
          obj[0].addEventListener("touchend",function(event){
+            if(that.status=="list"){
+              return;
+            }
             //event.preventDefault();
             var tempY=event.changedTouches[0].pageY;
             var tempScroll=this.scrollTop-touchScroll;
@@ -177,20 +203,12 @@ page=(function(){
 
           obj.click(function(){
             that.slideshow.activeObj=obj;
-            var ow=this;
-            if($(this).data("open")){
-              $(this).find(".trans").slideUp(function(){
-                $(ow).find(".fa-minus-square-o").addClass("fa-plus-square-o").removeClass("fa-minus-square-o");
-              });
-              $(this).data("open",0);
-            }else{
-              $(this).find(".trans").slideDown(function(){
-                $(ow).find(".fa-plus-square-o").removeClass("fa-plus-square-o").addClass("fa-minus-square-o");
-              });
-              $(this).data("open",1);
-            };
-            return false;
+            if(that.status=="large"){
+              return;
+            }
+            that.childHandler(obj);
           });
+
           obj.find(".getSound").click(function(event){
             event.stopPropagation();
               var audio=createVoice(obj.find(".word").text());
