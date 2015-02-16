@@ -205,14 +205,12 @@ input:focus{
 }
 .logoTitle{
   float: left;
-  font-size: 18px;
-  margin-left: 38px;
+  font-size: 12px;
+  margin-left: 30px;
   color: #333;
-
-  border-right: 1px solid #C7A600;
-  padding-right: 15px;
+  padding-right: 30px;
   height: 30px;
-  line-height: 32px;
+  line-height: 46px;
   margin-top: 8px;
 }
 @media(max-width:500px){
