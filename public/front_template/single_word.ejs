@@ -5,7 +5,15 @@
    <div class="searchCount">查询<%= word.searchCount||1 %>次</div>
   </div>
 	<div class="trans">
-		<% if(word.trans.basic){ %>	
+		<% if(word.trans.basic){var basic=word.trans.basic; %>	
+    <ul class="phonetic_ui">
+      <% if(basic["us-phonetic"]){ %>
+        <li>us : <%= basic["us-phonetic"] %></li>
+      <% } %>
+      <% if(basic["uk-phonetic"]){ %>
+        <li>uk : <%= basic["uk-phonetic"] %></li>
+      <% } %>
+    </ul>
 		<ul class="basic">
 			<% for(var i=0;i<word.trans.basic.explains.length;i++){ var explains=word.trans.basic.explains[i]; %>
 				<li>
@@ -18,7 +26,7 @@
 		<ul class="web">
 			<%for(var i=0;i<word.trans.web.length;i++){ var web=word.trans.web[i];%>
 				<li>
-					<span class="web_key"><%= web.key%>:</span>
+					<span class="web_key"><%= web.key%> : </span>
 					<span><%= web.value%></span>
 				</li>
 			<%}%>

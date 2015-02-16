@@ -157,6 +157,24 @@ page=(function(){
       }
       WordList.bindEvent=function(obj){
         var that=this;
+        var touchDir=0;
+        var touchScroll=0;
+
+          obj[0].addEventListener("touchstart",function(event){
+            touchDir=event.changedTouches[0].pageY;
+            touchScroll=this.scrollTop;
+          },true);
+         obj[0].addEventListener("touchend",function(event){
+            //event.preventDefault();
+            var tempY=event.changedTouches[0].pageY;
+            var tempScroll=this.scrollTop-touchScroll;
+            if(touchDir-tempY-tempScroll>140){
+              Static.WordList.slideshow.changePage(1);
+            }else if(touchDir-tempY-tempScroll<-140){
+              Static.WordList.slideshow.changePage(-1);
+            }
+          },true);
+
           obj.click(function(){
             that.slideshow.activeObj=obj;
             var ow=this;
