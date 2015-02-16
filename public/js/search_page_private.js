@@ -83,8 +83,8 @@ function createList(data){
     var phonetic=$("<ul/>",{"class":"phonetic_ui"}); 
     $("#trans_show").html("").append(phonetic,explains_UI,web_UI);
     var explains=data.basic.explains;
-    data.basic["us-phonetic"]?phonetic.append("<li>US : "+data.basic["us-phonetic"]+"</li>"):"";
-    data.basic["uk-phonetic"]?phonetic.append("<li>UK : "+data.basic["uk-phonetic"]+"</li>"):"";
+    data.basic["us-phonetic"]?phonetic.append("<li>[ us : "+data.basic["us-phonetic"]+" ]</li>"):"";
+    data.basic["uk-phonetic"]?phonetic.append("<li>[ uk : "+data.basic["uk-phonetic"]+" ]</li>"):"";
     for(var i=0;i<explains.length;i++){
        var li=$("<li/>",{"html":explains[i]}); 
        explains_UI.append(li);

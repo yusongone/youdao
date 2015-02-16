@@ -13,7 +13,7 @@
   margin:0;
   margin-left: -400px;
   overflow: hidden;
-  padding-left:240px;
+  padding-left:230px;
 }
 @media(max-width:800px){
     .page{
