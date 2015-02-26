@@ -24,7 +24,7 @@ router.get("/get_voice",function(req,res,next){
 });
 
 router.post("/getTranslateData",function(req,res){
-  var requestString=req.body.q;
+  var requestString=(req.body.q).trim();
   var requestSentence=req.body.sentence;
   if(!requestString){
     res.send({"status":"fail","message":"null"});
