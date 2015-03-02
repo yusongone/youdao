@@ -243,7 +243,7 @@ page=(function(){
           return false;
         };
         setStarAjax({word:json.word,count:count},function(){
-                //overflow.remove();
+                overflow.remove();
                 var parent=$(json.parent);
                 parent.find("i").each(function(){
                   if($(this).index()<count){
