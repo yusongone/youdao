@@ -15,4 +15,24 @@ router.get("/all",function(req,res,next){
   res.render("today_word",{"username":req.session.userName});
 });
 
+router.post("/setStar",function(req,res,next){
+  if(!req.session.userId){
+    res.redirect("/login");
+  }
+  var word=req.body.word;
+  var count=req.body.count;
+  
+  model.local_word.setStar({
+    "userId":req.session.userId+"",
+    "word":word,
+    "star":count
+  },function(err,result){
+    if(!err){
+      res.send({"status":"ok"});
+    }else{
+      res.send({"status":"failed","message":err});
+    }
+  });
+});
+
 

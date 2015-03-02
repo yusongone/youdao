@@ -39,6 +39,7 @@ page=(function(){
       return false;
     });
 
+
     $("#list").click(function(){
       Static.WordList.status="list";
       Static.WordList.slideshow.clearTop();
@@ -162,7 +163,6 @@ page=(function(){
         this.slideshow=ss;
       }
       WordList.childHandler=function(obj){
-        console.log(obj.find(".trans")[0].style.display);
             if(obj.find(".trans")[0].style.display=="block"){
                 obj.find(".trans").slideUp(function(){
                 obj.find(".fa-minus-square-o").addClass("fa-plus-square-o").removeClass("fa-minus-square-o");
@@ -186,7 +186,7 @@ page=(function(){
             }
             touchDir=event.changedTouches[0].pageY;
             touchScroll=this.scrollTop;
-          },true);
+          },false);
          obj[0].addEventListener("touchend",function(event){
             if(that.status=="list"){
               return;
@@ -199,7 +199,7 @@ page=(function(){
             }else if(touchDir-tempY-tempScroll<-140){
               Static.WordList.slideshow.changePage(-1);
             }
-          },true);
+          },false);
 
           obj.click(function(){
             that.slideshow.activeObj=obj;
@@ -209,6 +209,19 @@ page=(function(){
             that.childHandler(obj);
           });
 
+          obj.find(".star").click(function(){
+            if(that.status=="list"){
+              return;
+            }
+            var star=this;
+            var count=$(this).attr("data-count");
+            _createEditDiv({
+                parent:star,
+                count:count,
+                word:$(this).attr("data-word")
+              });
+          });
+
           obj.find(".getSound").click(function(event){
             event.stopPropagation();
               var audio=createVoice(obj.find(".word").text());
@@ -216,6 +229,66 @@ page=(function(){
             $("#"+$(this).attr("data-word"))[0].play();
           });
         }
+
+    function _createEditDiv(json,callback){
+      var ejstemp=new EJS({url:"/front_template/edit_star_div"});
+      var html=ejstemp.render({"count":json.count});      
+      var overflow=$(html);
+      overflow.click(function(){
+        overflow.remove();
+      });
+      overflow.find("i").click(function(){
+        var count=$(this).index()+1;
+        if($(json.parent).attr("data-count")==count){
+          return false;
+        };
+        setStarAjax({word:json.word,count:count},function(){
+                //overflow.remove();
+                var parent=$(json.parent);
+                parent.find("i").each(function(){
+                  if($(this).index()<count){
+                    $(this).addClass("active");
+                  }else{
+                    $(this).removeClass("active");
+                  }
+                });
+                parent.attr("data-count",count)
+        });
+        return false;
+      });
+      $("body").append(overflow);
+    }
+    
+    function _beforeSet(json){
+      $(".start_box").find("i").each(function(){
+        if($(this).index()<json.count){
+          $(this).addClass("fa-cog fa-spin setTemp");
+        }else{
+          $(this).removeClass("active setTemp fa-cog fa-spin");
+        }
+      });
+    }
+
+    function setStarAjax(json,callback){
+      _beforeSet(json);
+      $.ajax({
+        "type":"post",
+        "url":"/word/setStar",
+        "data":{
+          word:json.word,
+          count:json.count
+        },
+        "dataType":"json"
+      }).done(function(data){
+        if(data.status=="ok"){
+          callback();
+          console.log("ok");
+        }else{
+          console.log("failed");
+        }
+      });
+    }
+
     Static.WordList=WordList;
   })();
 

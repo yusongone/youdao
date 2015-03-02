@@ -2,6 +2,13 @@
 	<div class="key">
    <div class="word"><%= word.word %></div> 
    <div class="faBox"><i class="fa fa-plus-square-o"></i></div>
+   <div class="star" data-word=<%=word.word%> data-count="<%= word.star||2 %>">
+      <% var star=word.star||2; %>
+      <% for(var i=0;i<5;i++){ %>
+        <i class="fa <%= i<star?"fa-star active":"fa-star" %>"></i>
+      <% } %>
+      <i class="fa fa-pencil-square-o edit_enble"></i>
+   </div>
    <div class="searchCount">查询<%= word.searchCount||1 %>次</div>
   </div>
 	<div class="trans">

@@ -106,6 +106,34 @@
 .key:hover{
   background: rgba(10,10,10,0.04);
 }
+.edit_enble{
+  display:none;
+}
+.large .key .star .fa.edit_enble{
+  display:block;
+  color: #666;
+  margin-left: 5px;
+  font-size: 16px;
+}
+.star{
+  float:right;
+  margin-right:15px;
+}
+.key .star .fa{
+  font-size:12px;
+  float:left;
+  color:#dfdfdf;
+}
+.key .star .active{
+  color:#fd0;
+}
+.large .key .star .fa{
+  font-size:16px;
+  color:#efefef;
+}
+.large .key .star .active{
+  color:#fd0;
+}
 .key .fa{
 	float: right;
 	line-height: 22px;
@@ -331,4 +359,26 @@
   float: left;
   margin-right: 35px;
   color: #a60505;
+}
+.start_box{
+  width:100%;
+  position:absolute;
+  top:50%;
+  padding:5px 0;
+  margin-top:-24px;
+  text-align:center;
+  font-size:48px;
+  line-height:48px;
+  background:rgba(0,0,0,0.5);
+}
+.start_box i{
+  color:#ddd;
+  width:48px;
+  height:48px;
+}
+.start_box i.active{
+  color:#fd0;
+}
+.start_box i.setTemp{
+  color:#fd0;
 }

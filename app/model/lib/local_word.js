@@ -21,7 +21,7 @@ var objId=new objectId();
 			col.findOne({"word":json.word,"userId":json.userId},function(err,result1){
 					if(null==result1){
             console.log("insert");
-						col.insert({"userId":json.userId,"_id":objId,"word":json.word,"trans":json.obj,"searchCount":1},function(err){
+						col.insert({"userId":json.userId,"_id":objId,"word":json.word,"trans":json.obj,"searchCount":1,"star":2},function(err){
 							_addWordDate({userId:json.userId,wordId:objId},function(err){
               updateSentence();
 							});
@@ -78,7 +78,7 @@ function _getWordList(json,callback){
 					ary.push(new objectId(wl[i]));
 				}
 			var wdcol=database.collection("word");
-				wdcol.find({"_id":{$in:ary}},{"_id":0,"word":1,"trans":1,"sentence":1,"searchCount":1}).sort({"_id":-1}).toArray(function(err,result2){
+				wdcol.find({"_id":{$in:ary}},{"_id":0}).sort({"_id":-1}).toArray(function(err,result2){
 					callback(err,result2);
 					poolMain.release(database);
 				});
@@ -109,13 +109,25 @@ function _getDateList(json,callback){
 
 function _getWordData(json,callback){
 	poolMain.acquire(function(err,database){
-			var dtcol=database.collection("word");
-				dtcol.find({"userId":json.userId,"word":json.word},{"_id":0}).sort({"_id":-1}).toArray(function(err,result2){
+			var col=database.collection("word");
+				col.find({"userId":json.userId,"word":json.word},{"_id":0}).sort({"_id":-1}).toArray(function(err,result2){
 					callback(err,result2);
 					poolMain.release(database);
 				});
   });
 }
+
+function _setStar(json,callback){
+	poolMain.acquire(function(err,database){
+			var col=database.collection("word");
+					col.update({"userId":json.userId,"word":json.word},{"$set":{"star":json.star}},function(err){
+					callback(err);
+					poolMain.release(database);
+				});
+  });
+}
+
+exports.setStar=_setStar;
 exports.addWord=_addWord;
 exports.getWordList=_getWordList;
 exports.getUserAllWord=_getUserAllWord;
