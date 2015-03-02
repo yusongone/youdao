@@ -35,7 +35,7 @@
 }
 .wordListBox .wordBar{
   width:100%; 
-  height:35px;
+  height:36px;
   margin-top:-35px;
   background:#ddd;
 }
@@ -111,7 +111,7 @@
 }
 .large .key .star .fa.edit_enble{
   display:block;
-  color: #666;
+  color: #999;
   margin-left: 5px;
   font-size: 16px;
 }
@@ -244,15 +244,14 @@
 }
 .count{
   float: right;
-  border: 1px solid rgb(255, 221, 0);
   width: 22px;
   height: 22px;
-  line-height: 20px;
-  background: rgb(255, 248, 202);
+  line-height: 22px;
+  background: rgb(255, 238, 124);
   text-align: center;
   border-radius: 15px;
   font-size: 12px;
-  margin-right:10px;
+  margin-right: 10px;
 }
 .loading{
   float:right;
@@ -261,7 +260,7 @@
 }
 .buttonBox{
   float:right;
-  margin-right:15px;
+  margin-right:5px;
 }
 .buttonBox .fa{
   cursor:pointer;
@@ -269,10 +268,14 @@
   line-height: 26px;
   padding: 1px 5px 0;
   margin: 0 3px;
-  margin-top: 4px;
+  margin-top: 3px;
   border-radius: 3px;
   color: rgb(255, 221, 0);
   background: #bbb;
+  border:1px solid #ddd;
+  width:30px;
+  height:30px;
+  text-align:center;
 }
 
 .large{
