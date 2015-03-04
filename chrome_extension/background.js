@@ -3,8 +3,8 @@ var staticData={
 var page={};
 
 chrome.contextMenus.create({
-  "id":"fe",
-  "title":"翻译",
+  "id":"cd",
+  "title":"词典",
   "contexts":["selection"],
   "onclick":function(info, tab){
     alertLogin(info,tab);
@@ -12,7 +12,19 @@ chrome.contextMenus.create({
   }
 }, function(err){
   console.log(err);
-})
+});
+
+chrome.contextMenus.create({
+  "id":"fc",
+  "title":"分词",
+  "contexts":["selection"],
+  "onclick":function(info, tab){
+    //alertLogin(info,tab);
+    return;
+  }
+}, function(err){
+  console.log(err);
+});
 
 
 function alertLogin(info,tab){
