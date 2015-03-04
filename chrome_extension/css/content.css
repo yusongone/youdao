@@ -61,3 +61,10 @@
 .spider_content  .spider_web_child li{
   margin:10px 0;
 }
+strong:hover{
+  color:red;
+  cursor:pointer;
+}
+strong.big{
+  color:red;
+}

@@ -1,7 +1,6 @@
 //$("body").attr("background","red");
 var loading=$("<span/>",{"class":"spider_loading","text":"Loading..."});
 var content=$("<div/>",{"class":"spider_content"});
-function createDirUI(){
   $(".spider_transBox").remove();
   var div=$("<div/>",{"class":"spider_transBox"}); 
    div.append(loading,content);
@@ -13,21 +12,13 @@ function createDirUI(){
   $(".spider_transBox").click(function(){
     return false;
   });
-}
-console.log("----------");
 chrome.extension.onMessage.addListener(function(request, sender, response) {
     loading.remove();
     var data=request.data;
-    console.log(request);
     if(data&&!data.status){
       createTransUI(data);
     }else if(data&&data.message=="login time out"){
       content.append("请在打开页面中登陆");
-    }
-    if(request.action=="Trans"){
-         
-    }else if(request.action=="Dic"){
-      createDirUI();
     }
 });
 

@@ -1,8 +1,8 @@
 {
 "manifest_version": 2,
-"name":"spider translate",
+"name":"蛛丝马迹--记单词",
 "version": "0.0.3",
-"description": "spider translate home made",
+"description": "轻松记录日常疑难单词，随时随地随心复习。",
 "icons": 
   { 
     "16": "/images/spider.png",
@@ -25,7 +25,7 @@
 "browser_action": {
     "default_icon": "/images/spider.png",
     //"default_icon": "/images/t_site_logo.png",
-    "default_title": "TestExt",
+    "default_title": "蛛丝马迹-记单词",
     "default_popup": "popup.html"
   }
 }

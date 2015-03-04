@@ -7,7 +7,7 @@ chrome.contextMenus.create({
   "title":"词典",
   "contexts":["selection"],
   "onclick":function(info, tab){
-    alertLogin(info,tab);
+    getDictionary(info,tab);
     return;
   }
 }, function(err){
@@ -19,7 +19,7 @@ chrome.contextMenus.create({
   "title":"分词",
   "contexts":["selection"],
   "onclick":function(info, tab){
-    //alertLogin(info,tab);
+    getTrans(info,tab);
     return;
   }
 }, function(err){
@@ -27,28 +27,37 @@ chrome.contextMenus.create({
 });
 
 
-function alertLogin(info,tab){
-  chrome.tabs.insertCSS(tab.id,{file:"/css/content.css"});
-  chrome.tabs.executeScript(null, {file: "/js/jquery-2.1.1.min.js"},function(){ });
-  chrome.tabs.executeScript(null, {file: "/js/content.js"});
-  getTrans(info,tab);
-}
 
 function getTrans(info,tab){
-    $.ajax({
-      type:"post",
-      url:"http://www.makejs.com/trans/getTranslateData",
-      data:{
-        q:info.selectionText
-      },
-      dataType:"json"
-    }).error(function(){
-    }).done(function(data){
-          chrome.tabs.sendMessage(tab.id,{"data":data},function(){ });
-        if(data.message=="login time out"){
-          chrome.tabs.create({url:"http://www.makejs.com/login/"});
-        }
+  chrome.tabs.insertCSS(tab.id,{file:"/css/content.css"});
+  chrome.tabs.executeScript(null, {file: "/js/jquery-2.1.1.min.js"},function(){
+    chrome.tabs.executeScript(null, {file: "/js/trans_content.js"},function(){
+      chrome.tabs.sendMessage(tab.id,{"action":"Trans","q":info.selectionText},function(){});
     });
+  });
+}
+
+function getDictionary(info,tab){
+  chrome.tabs.insertCSS(tab.id,{file:"/css/content.css"});
+  chrome.tabs.executeScript(null, {file: "/js/jquery-2.1.1.min.js"},function(){
+    chrome.tabs.executeScript(null, {file: "/js/dir_content.js"},function(){
+      $.ajax({
+        type:"post",
+        url:"http://www.makejs.com/trans/getTranslateData",
+        data:{
+          q:info.selectionText
+        },
+        dataType:"json"
+      }).error(function(){
+      }).done(function(data){
+            chrome.tabs.sendMessage(tab.id,{"data":data},function(){
+            });
+            if(data.message=="login time out"){
+              chrome.tabs.create({url:"http://www.makejs.com/login/"});
+            }
+      });
+    });
+  });
 };
 
 
