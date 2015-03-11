@@ -6,6 +6,7 @@ var search=require("./lib/search");
 var trans=require("./lib/trans");
 var home=require("./lib/home");
 var query=require("./lib/query");
+var chart=require("./lib/chart");
 
 
 
@@ -15,4 +16,5 @@ exports.init=function(app){
   trans(app);
   home(app);
   query(app);
+  chart(app);
 }
