@@ -1,0 +1,34 @@
+{
+  "name": "youdao",
+  "version": "1.0.0",
+  "description": "aiffffdfasdfasdf asdfsdf",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.6.0",
+    "connect-mongo": "^0.4.1",
+    "cookie-parser": "^1.3.2",
+    "ejs": "^1.0.0",
+    "express": "^4.8.0",
+    "express-device": "^0.3.11",
+    "generic-pool": "^2.1.1",
+    "express-session": "^1.7.4",
+    "mongodb": "^1.4.8",
+    "useragent": "^2.1.5",
+    "crypto": "^0.0.3",
+    "cookie-session": "^1.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://yusongone@github.com/yusongone/youdao.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yusongone/youdao/issues"
+  },
+  "homepage": "https://github.com/yusongone/youdao#readme"
+}

@@ -1,4 +1,3 @@
-var device=require("express-device");
 var express=require("express");
 var cookieParser=require("cookie-parser");
 var session=require("express-session");
@@ -7,8 +6,8 @@ var ejs=require("ejs");
 var mongoStore=require("connect-mongo")(session);
 var session_conf=require("./config.json").session_conf;
 var app=express();
+var model=require("./app/model");
 var Controller=require("./app/controller");
-var useragent = require('useragent');
 var store=new mongoStore({
 		db:session_conf.dbname,
 	            host:session_conf.path,
@@ -21,11 +20,13 @@ var store=new mongoStore({
 
 
 var disport=3420;
-app.listen(disport,function(){
-	console.log("listen at "+disport);
+model.DB.initConnection(function(){
+    console.log("mongodb connection created ...");
+	app.listen(disport,function(){
+		console.log("listen at "+disport);
+	});
 });
 
-app.use(device.capture());
 app.use(express.static(__dirname+'/public'));
 app.use(cookieParser("keyboard cat"));
 app.use(bodyParser.json());
@@ -43,17 +44,20 @@ app.use(session({
 app.set("views",__dirname+"/app/views");
 app.engine("html",ejs.renderFile);
 app.set('view engine', 'html');
-var count=0;
 app.use(function(req,res,next){
 var d=req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
-  var agent=useragent.parse(req.headers['user-agent']);
-  console.log(req.headers["user-agent"]);
-  var parser = new device.Parser(req);
-  var dd=agent.device.toString();
-    console.log("------",dd);
-    console.log("+++++++++++++++",parser.get_type());
-    next();
-    count++;
+next();
 });
 
 Controller(app);
+
+app.get("/ffff",function(req,res,next){
+    model.DB.getCon(function(db){
+        var users=db.collection("users");
+            users.find().toArray(function(err,a){
+                console.log(a[0]);
+                res.send("a");
+            });
+    });
+});
+

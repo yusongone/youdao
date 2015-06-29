@@ -1,21 +1,20 @@
-var poolMain=require("./pool").pool;
+var pool=require("./db_pool");
 var crypto=require("crypto");
 
 function _auth(json,callback){
 	var id=json.id;
 	var pass=json.pass;
-	poolMain.acquire(function(err,database){
+	pool.getCon(function(err,database){
 		var col=database.collection("users");
 		var md5=crypto.createHash("md5");
 		var md5Pass=md5.update(pass).digest("base64");
 		col.find({"account":json.id,"pass":md5Pass}).toArray(function(err,docAry){
-      var json={};
+      	var json={};
 			if(docAry.length>0){
 				json.id=docAry[0]._id;
 				json.name=docAry[0].account;
 			}
 			callback(err,json);
-			poolMain.release(database);
 		});
 	});
 }
@@ -23,12 +22,11 @@ function _auth(json,callback){
 function _register(json,callback){
 	var id=json.id;
 	var pass=json.pass;
-	poolMain.acquire(function(err,database){
+	pool.getCon(function(err,database){
 		var col=database.collection("users");
 		var md5=crypto.createHash("md5");
 		var md5Pass=md5.update(pass).digest("base64");
 		col.insert({"account":json.id,"pass":md5Pass},function(err,result){
-			poolMain.release(database);
 		});
 	});
 }

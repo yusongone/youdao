@@ -24,8 +24,10 @@
 ],
 "browser_action": {
     "default_icon": "/images/spider.png",
-    //"default_icon": "/images/t_site_logo.png",
     "default_title": "蛛丝马迹-记单词",
     "default_popup": "popup.html"
   }
 }
+
+
+
