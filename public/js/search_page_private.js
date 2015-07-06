@@ -13,7 +13,6 @@ function bindEvent(){
             getPathData($("#searchInput").val());
         }
     });
-		$("body").addClass("bodyover");
 }
 function showMenu(action,callback){
 	if(action){
