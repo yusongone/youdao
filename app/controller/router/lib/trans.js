@@ -46,10 +46,11 @@ function _getWordfromYoudao(json){
   },function(err,string){
   var obj=JSON.parse(string);
       if(err){
-       res.send({"status":"error"});
+        writeHead(404, {});
+        res.send({"status":"error"});
        return;
       }
-      res.send(string); 
+      res.send(obj); 
       if(obj.basic){
         model.local_word.addWord({
           word:json.word,
