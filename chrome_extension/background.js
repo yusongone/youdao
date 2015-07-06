@@ -14,6 +14,7 @@ chrome.contextMenus.create({
   console.log(err);
 });
 
+/*
 chrome.contextMenus.create({
   "id":"fc",
   "title":"分词",
@@ -25,7 +26,7 @@ chrome.contextMenus.create({
 }, function(err){
   console.log(err);
 });
-
+*/
 
 
 function getTrans(info,tab){

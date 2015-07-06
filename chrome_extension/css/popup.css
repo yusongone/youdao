@@ -11,23 +11,28 @@ body{
     outline:none;
 }
 .inputBox input{
-    width:100%;
-    height:24px;
-    line-height:24px;
-    padding-left:5px;
-    box-sizing:border-box;
-    border:1px solid #efefef;
-    border-radius:3px;
+    width: 100%;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 5px;
+    box-sizing: border-box;
+    border: 1px solid #efefef;
+    border-radius: 2px;
+    font-size: 16px;
 }
 .trans_show{
     font-size:14px;
     color:#666;
     }
-.trans_show .e_ui,.trans_show .web_ui{
+.trans_show .phonetic_ui,
+.trans_show .e_ui,
+.trans_show .web_ui{
     padding-left:15px;
     margin-top:15px;
     padding-top:0px;
     border-top:1px solid #efefef;
+    float:left;
+    width:100%;
 }
 .trans_show .e_ui{
     line-height:24px;
@@ -54,4 +59,17 @@ body{
   float: left;
   margin-bottom: 20px;
   text-indent: 18px;
+}
+.trans_show .phonetic_ui {
+    margin: 0;
+    border: 0px;
+    float: left;
+    width: 100%;
+    padding-top: 15px;
+    font-size: 16px;
+}
+.phonetic_ui li{
+    float: left;
+    margin-right: 35px;
+    color: #a60505;
 }
