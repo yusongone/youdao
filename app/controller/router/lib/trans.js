@@ -54,6 +54,7 @@ function _getWordfromYoudao(json){
       if(obj.basic){
         model.local_word.addWord({
           word:json.word,
+            deviceType:req.body.deviceType,
           sentence:json.sentence,
           obj:obj,
           userId:req.session.userId

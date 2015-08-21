@@ -2,6 +2,7 @@ var express=require("express");
 var cookieParser=require("cookie-parser");
 var session=require("express-session");
 var bodyParser=require("body-parser");
+var compress=require("compression");
 var ejs=require("ejs");
 var mongoStore=require("connect-mongo")(session);
 var session_conf=require("./config.json").session_conf;
@@ -27,6 +28,7 @@ model.DB.initConnection(function(){
 	});
 });
 
+app.use(compress());
 app.use(express.static(__dirname+'/public'));
 app.use(cookieParser("keyboard cat"));
 app.use(bodyParser.json());

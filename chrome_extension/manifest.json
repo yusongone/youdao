@@ -14,8 +14,9 @@
     "activeTab",
     "contextMenus",
     "http://*.youdao.com/",
-    "http://*.makejs.com/"
-    ],  
+    "http://*.makejs.com/",
+    "http://localhost/"
+    ],
 "background": {
     "scripts": ["/js/jquery-2.1.1.min.js","background.js"]
   },

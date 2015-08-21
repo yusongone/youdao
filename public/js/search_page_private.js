@@ -45,7 +45,8 @@ function getPathData(val){
         url:"/trans/getTranslateData",
         type:"post",
         data:{
-            "q":val
+            "q":val,
+            "deviceType":0
         },
         dataType:"json",
         success:function(data){

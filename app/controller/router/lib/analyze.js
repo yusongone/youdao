@@ -5,14 +5,14 @@ var model=require("../../../model");
 
 
 module.exports=function(app){
-  app.use("/chart",router);
+    app.use("/analyze",router);
 }
 
 router.get("/",function(req,res,next){
-  if(!req.session.userId){
-    res.redirect("/login");
-  }
-  res.render("chart",{"username":req.session.userName});
+    if(!req.session.userId){
+        res.redirect("/login");
+    }
+    res.render("analyze",{"username":req.session.userName});
 });
 
 

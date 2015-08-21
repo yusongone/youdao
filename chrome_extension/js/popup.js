@@ -40,7 +40,8 @@ function getPathData(val){
             "type":"data",
             "doctype":"json",
             "version":"1.1",
-            "q":val
+            "q":val,
+            "deviceType":2
         },
         datatype:"JSON",
         success:function(data){

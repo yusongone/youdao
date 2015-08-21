@@ -44,9 +44,11 @@ function getDictionary(info,tab){
     chrome.tabs.executeScript(null, {file: "/js/dir_content.js"},function(){
       $.ajax({
         type:"post",
-        url:"http://www.makejs.com/trans/getTranslateData",
+            url:"http://www.makejs.com/trans/getTranslateData",
+          //url:"http://localhost:3420/trans/getTranslateData",
         data:{
-          q:info.selectionText
+          q:info.selectionText,
+            "deviceType":1
         },
         dataType:"json"
       }).error(function(){
