@@ -20,7 +20,6 @@ function _addWord(json,callback){
     json.word=json.word.toLowerCase();
 	    col.findOne({"word":json.word,"userId":json.userId},function(err,result1){
 		    if(null==result1){
-            console.log("insert");
                 col.insert({"userId":json.userId,"_id":objId,"word":json.word,"trans":json.obj,"searchCount":1,"star":2},function(err){
                     _addWordDate({deviceType:json.deviceType,userId:json.userId,wordId:objId},function(err){
                         updateSentence();
@@ -58,15 +57,17 @@ function _addWordDate(json,callback){
 					var has=false;
 					for(var i=0;i<list.length;i++){
 						var temp=list[i];
-						if(temp.wordId.toString()==wordId&&temp.timestamp.length<20){
-							temp.timestamp.push(timestamp);
+						if(temp.wordId&&temp.wordId.toString()==wordId){
+							if(!temp.reqInfo){
+								temp.reqInfo=[];
+							};
+							temp.reqInfo.push(timestamp);
 							col.update({"userId":json.userId,"date":d},{$set:{"wordList":list}});
 							has=true;
 						};
 					}
 					if(!has){
-						console.log("new line");
-						list.push({wordId:wordId,timestamp:[timestamp]});
+						list.push({wordId:wordId,reqInfo:[timestamp]});
 						col.update({"userId":json.userId,"date":d},{$set:{"wordList":list}});
 					}
 				});
