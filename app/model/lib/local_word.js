@@ -49,12 +49,11 @@ function _addWordDate(json,callback){
 		col.findOne({"userId":json.userId,"date":d},function(err,result){
 			var timestamp=parseInt((new Date()).getTime()/1000)+","+(json.deviceType||0);
 			if(null==result){
-				col.insert({"userId":json.userId,"date":d,"wordList":[{wordId:wordId,request:[timestamp]}]},function(err,result){
+				col.insert({"userId":json.userId,"date":d,"wordList":[{wordId:wordId,reqInfo:[timestamp]}]},function(err,result){
 					callback(err,result);
 				});
 			}else{
 				col.findOne({"userId":json.userId,"date":d},function(err,doc){
-					console.log(err,doc);
 					var list=doc.wordList;
 					var has=false;
 					for(var i=0;i<list.length;i++){
@@ -93,7 +92,8 @@ function _getWordList(json,callback){
 			var wl=result.wordList;
 			var ary=[];
 				for(var i=0;i<wl.length;i++){
-					ary.push(new objectId(wl[i]));
+					var wordId=wl[i].wordId||wl[i];
+					ary.push(new objectId(wordId));
 				}
 			var wdcol=database.collection("word");
 				wdcol.find({"_id":{$in:ary}},{"_id":0}).sort({"_id":-1}).toArray(function(err,result2){
