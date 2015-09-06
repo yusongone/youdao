@@ -9,12 +9,18 @@
     </head>
     <script src="/js/vendor/require-jquery.min.js" data-main="/js/login.js" ></script>
     <body>
-        <% include public_dom/top_bar %>
+        <!--<% include public_dom/top_bar %>-->
         <div class="page">
             <ul class="showBox">
+                <li>
+                    <label> 邮件:</label>
+                    <input id="email" type="text" />
+                    <i class="fa fa-check check"></i>
+                </li>
 				<li>
-					<label> 名称:</label>
-					<input id="id" type="text" />
+					<label> 用户名:</label>
+					<input id="username" type="text" />
+                    <i class="fa fa-check check"></i>
 				</li>
 				<li>
 					<label> 密码:</label>
@@ -25,9 +31,13 @@
 					<input id="repass" type="password" />
 				</li>
 				<li>
-        <input class="captcha"  id="captcha" placeholder="邀请码"/>
-				<div class="btn loginBtn" id="registerBtn">注册</div>
+                    <label> 邀请码:</label>
+                    <input class="captcha"  id="captcha" placeholder=""/>
 				</li>
+                <li>
+                    <label>&nbsp; </label>
+                    <div class="btn registerBtn" id="registerBtn">注册</div>
+                </li>
             </ul>
         </div>
     </body>

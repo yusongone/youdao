@@ -10,6 +10,8 @@
   width:195px;
   height:auto;
   font-size:14px;
+  border:1px solid #ddd;
+  background:#fff;
 }
 .showBox label{
 	float:left;
@@ -21,20 +23,29 @@
 
 .showBox li{
   float:left;
-	width: 270px;
+	width: 300px;
 	margin: 0 auto;
 	margin-bottom:20px;
+}
+.showBox li .check{
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  font-size: 18px;
+  color: #00B100;
 }
 .showBox .loginBtn{
 	float:right;
 	margin-right:5px;
   margin-top:-5px;
 }
+.showBox .registerBtn{
+  float:left;
+}
 input.captcha{
   width: 80px;
   float: left;
-  margin-left: 68px;
-  margin-top: -6px;
 }
 .toRegister{
   margin-left: 70px;

@@ -66,14 +66,14 @@ function _getWordfromYoudao(json){
 
 router.get("/word",function(req,res,next){
   if(!req.session.userId){
-    res.redirect("/login");
+    res.redirect("/auth/login");
   }
   res.render("search_page",{"username":req.session.userName});
 });
 
 router.get("/sentence",function(req,res,next){
   if(!req.session.userId){
-    res.redirect("/login");
+    res.redirect("/auth/login");
   }
   res.render("sentence",{"username":req.session.userName});
 });

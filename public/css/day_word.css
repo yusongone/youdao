@@ -318,21 +318,23 @@
 .prev_next{
   position: absolute;
   z-index: 2;
-  width: 100%;
   margin-top: -100px;
   display: none;
   width: 50px;
   right: 0;
-  bottom: 180px;
+  bottom: 30px;
   text-align:center;
 }
 .prev_next .fa{
   font-size: 32px;
   line-height: 50px;
-  color:rgba(0,0,0,0.2);
+  color:#ffdd00;
+}
+.prev_next .fa:focus{
+  background:red;
 }
 .prev_next .fa:hover{
-  color:rgba(0,0,0,0.3);
+  color:#ffdd00;
 }
 @media(max-width:500px){
   .prev_next .fa{

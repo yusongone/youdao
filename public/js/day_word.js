@@ -16,12 +16,13 @@ page=(function(){
 	function createVoice(word,callback){
 		var src="/trans/get_voice/?word="+word;
 		//var src="http://dict.youdao.com/dictvoice?audio="+word;
-		var audio=$("<audio/>",{"controls":1,"id":word,"style":"display:none;"});
+		var audio=$("<audio/>",{"controls":1,class:"audio","id":word,"style":"display:none;"});
 		var source=$("<source/>");
 		audio.append(source);
 		source[0].src=src;
+        window.aa=source[0];
 		audio[0].oncanplaythrough=function(){
-			$(".icon_"+word).removeClass("fa-spinner").removeClass("fa-spin").addClass("fa-volume-up");	
+			$(".icon_"+word).removeClass("fa-spinner").removeClass("fa-spin").addClass("fa-volume-up");
 			callback?callback():"";
 		}
 		return audio;
@@ -187,6 +188,9 @@ page=(function(){
             touchDir=event.changedTouches[0].pageY;
             touchScroll=this.scrollTop;
           },false);
+        obj[0].addEventListener("touchmove",function(event){
+          event.preventDefault()
+        });
          obj[0].addEventListener("touchend",function(event){
             if(that.status=="list"){
               return;
@@ -222,11 +226,25 @@ page=(function(){
               });
           });
 
-          obj.find(".getSound").click(function(event){
-            event.stopPropagation();
-              var audio=createVoice(obj.find(".word").text());
+          obj.find(".getSound").click("click",function(event){
+              var btn=$(this);
+              btn.text("加载...");
+              var audio=createVoice(obj.find(".word").text(),function(){
+                  btn.text("发音");
+              });
+              $(".audio").remove();
               obj.append(audio);
-            $("#"+$(this).attr("data-word"))[0].play();
+              $("#"+$(this).attr("data-word"))[0].play();
+          });
+          obj.find(".getSound").bind("touchend",function(event){
+              var btn=$(this);
+              btn.text("加载...");
+              var audio=createVoice(obj.find(".word").text(),function(){
+                  btn.text("发音");
+              });
+              $(".audio").remove();
+              obj.append(audio);
+              $("#"+$(this).attr("data-word"))[0].play();
           });
         }
 

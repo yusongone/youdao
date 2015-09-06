@@ -5,6 +5,7 @@ var word=require("./lib/word");
 var search=require("./lib/search");
 var trans=require("./lib/trans");
 var home=require("./lib/home");
+var auth=require("./lib/auth");
 var query=require("./lib/query");
 var analyze=require("./lib/analyze");
 
@@ -17,4 +18,5 @@ exports.init=function(app){
   home(app);
   query(app);
   analyze(app);
+  auth(app);
 }
