@@ -1,6 +1,13 @@
-var page_render=require("./lib/page_render");
 var router=require("./router");
+var playback=require("./lib/playback");
+var emailTo=require("./lib/email_to");
 
-module.exports=function(app){
+
+function ex(app){
   router.init(app);
 }
+
+
+ex.Playback=playback;
+ex.EmailTo=emailTo;
+module.exports=ex;

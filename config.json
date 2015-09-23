@@ -12,6 +12,10 @@
 		"user":"song",
 		"pass":"zhw",
 		"collection":"session"
+	},
+  	"email":{
+	 	"mail":"server@makejs.com",
+	  	"pass":"4855362"
 	}
 }
 

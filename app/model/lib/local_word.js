@@ -40,9 +40,8 @@ function _addWord(json,callback){
 };
 
 function _addWordDate(json,callback){
-	var dateObj=new Date();
 	var wordId=json.wordId;
-	var d=dateObj.getFullYear()+"-"+(1+dateObj.getMonth())+"-"+dateObj.getDate();
+	var d=Math.floor(new Date().getTime()/100000)*100000;
 	pool.getCon(function(err,database){
 		var col=database.collection("date");
 		col.findOne({"userId":json.userId,"date":d},function(err,result){
@@ -71,19 +70,33 @@ function _addWordDate(json,callback){
 						col.update({"userId":json.userId,"date":d},{$set:{"wordList":list}});
 					}
 				});
-				return;
-				col.update({"userId":json.userId,"date":d},{$addToSet:{"wordList":[{wordId:wordId,timestamp:[timestamp]}]}},function(err,result){
-				callback(err,result);
-});
 			};
 		});
 	});
 }
 
-function _getWordList(json,callback){
+function _getMultiDayWordList(json,callback){
 	pool.getCon(function(err,database){
-		var dateObj=new Date();
-		var d=json.date||dateObj.getFullYear()+"-"+(1+dateObj.getMonth())+"-"+dateObj.getDate();
+		var col=database.collection("date");
+		console.log(json.startDate);
+		console.log(json.endDate);
+		col.find({date:{$gte:json.startDate,$lt:json.endDate}},{date:1,wordList:1}).toArray(function(err,ary){
+			console.log(ary.length);
+			console.log(new Date(ary[0].date).toISOString());
+			console.log(new Date(ary[ary.length-1].date).toISOString());
+			console.log(ary.length);
+			if(!ary){
+				callback(err,[]);
+				return;
+			}else{
+				callback(err,ary);
+			}
+		});
+	});
+}
+function _getOneDayWordList(json,callback){
+	pool.getCon(function(err,database){
+		var d=parseInt(json.date)||Math.floor(new Date().getTime()/100000)*100000;
 		var col=database.collection("date");
 		col.findOne({"date":d,"userId":json.userId},{"wordList":1,"_id":0},function(err,result){
 			if(!result){
@@ -96,39 +109,37 @@ function _getWordList(json,callback){
 					var wordId=wl[i].wordId||wl[i];
 					ary.push(new objectId(wordId));
 				}
-			var wdcol=database.collection("word");
-				wdcol.find({"_id":{$in:ary}},{"_id":0}).sort({"_id":-1}).toArray(function(err,result2){
-					callback(err,result2);
-				});
+			_getWordsData({words:ary},callback);
 		});
 	});
 }
 
 
+
 function _getUserAllWord(json,callback){
 	pool.getCon(function(err,database){
-			var wdcol=database.collection("word");
-				wdcol.find({"userId":json.userId},{"_id":0,"sentence":1,"word":1,"trans":1}).sort({"_id":-1}).toArray(function(err,result2){
-					callback(err,result2);
-				});
+        var wdcol=database.collection("word");
+            wdcol.find({"userId":json.userId},{"_id":0,"sentence":1,"word":1,"trans":1}).sort({"_id":-1}).toArray(function(err,result2){
+            callback(err,result2);
+        });
   });
 }
 
 function _getDateList(json,callback){
 	pool.getCon(function(err,database){
-			var dtcol=database.collection("date");
-				dtcol.find({"userId":json.userId},{"_id":0}).sort({"_id":-1}).toArray(function(err,result2){
-					callback(err,result2);
-				});
+        var dtcol=database.collection("date");
+            dtcol.find({"userId":json.userId},{"_id":0}).sort({"_id":-1}).toArray(function(err,result2){
+            callback(err,result2);
+        });
   });
 }
 
-function _getWordData(json,callback){
+function _getWordsData(json,callback){
 	pool.getCon(function(err,database){
-			var col=database.collection("word");
-				col.find({"userId":json.userId,"word":json.word},{"_id":0}).sort({"_id":-1}).toArray(function(err,result2){
-					callback(err,result2);
-				});
+		var wdcol=database.collection("word");
+		wdcol.find({"_id":{$in:json.words}},{"_id":0}).sort({"_id":-1}).toArray(function(err,result2){
+			callback(err,result2);
+		});
   });
 }
 
@@ -143,7 +154,8 @@ function _setStar(json,callback){
 
 exports.setStar=_setStar;
 exports.addWord=_addWord;
-exports.getWordList=_getWordList;
+exports.getOneDayWordList=_getOneDayWordList;
+exports.getMultiDayWordList=_getMultiDayWordList;
 exports.getUserAllWord=_getUserAllWord;
 exports.getDateList=_getDateList;
-exports.getWordData=_getWordData;
+exports.getWordsData=_getWordsData;

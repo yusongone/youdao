@@ -9,6 +9,8 @@ var session_conf=require("./config.json").session_conf;
 var app=express();
 var model=require("./app/model");
 var Controller=require("./app/controller");
+var Task=require("./app/tools/task");
+var playback=Controller.EmailTo;
 var store=new mongoStore({
 		db:session_conf.dbname,
 	            host:session_conf.path,
@@ -52,14 +54,13 @@ next();
 });
 
 Controller(app);
-
-app.get("/ffff",function(req,res,next){
-    model.DB.getCon(function(db){
-        var users=db.collection("users");
-            users.find().toArray(function(err,a){
-                console.log(a[0]);
-                res.send("a");
-            });
-    });
+console.log(Task);
+var task=new Task({
+	loop:Task.loopType.WORKDAY,
+	time:"18:00:00",
+	handler:function(){
+		console.log("abcd");
+	}
 });
+//task.run();
 

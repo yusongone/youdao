@@ -19,4 +19,4 @@ exports.init=function(app){
   query(app);
   analyze(app);
   auth(app);
-}
+};

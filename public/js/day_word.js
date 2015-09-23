@@ -105,7 +105,7 @@ page=(function(){
       }).done(function(data){
           var ul=$("<ul/>",{"class":"datelist"});
           for(var i=0;i<data.length;i++){
-            var li=$("<li/>",{"text":data[i].date}).data("val",data[i].date);
+            var li=$("<li/>",{"text":new Date(data[i].date).toISOString().substr(0,10)}).data("val",data[i].date);
             var span=$("<span/>",{"class":"count","text":data[i].wordList.length});
             li.append(span);
             if(i==0){
@@ -128,7 +128,7 @@ page=(function(){
   function _getWordListByDate(date,loading){
     var ejstemp=new EJS({url:"/front_template/single_word.ejs"});
     $.ajax({
-        url:"/query/getWordList",
+        url:"/query/getOneDayWordList",
         type:"post",
         data:{
           date:date

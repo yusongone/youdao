@@ -21,12 +21,12 @@ router.post("/getDateList",function(req,res,next){
   });
 });
 
-router.post("/getWordList",function(req,res,next){
+router.post("/getOneDayWordList",function(req,res,next){
   if(!req.session.userId){
     res.redirect("/login");
   }
   var date=req.body.date;
-  model.local_word.getWordList({"date":date,"userId":req.session.userId+""},function(err,result){
+  model.local_word.getOneDayWordList({"date":date,"userId":req.session.userId+""},function(err,result){
     if(!err){
       res.send(result);
     }else{
