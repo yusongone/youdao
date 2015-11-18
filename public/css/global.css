@@ -10,7 +10,8 @@ box-sizing:border-box;
 font-family:proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 a{text-decoration:none;}
-input{
+input[type='password'],
+input[type='text']{
     float:left;
     line-height:24px;
     padding:3px;
@@ -19,6 +20,9 @@ input{
     border:1px solid #efefef;
     -webkit-appearance: none;
     border-radius: 3px;
+}
+input[type='radio']{
+    margin:0 5px;
 }
 input:focus{
     border:1px solid #999;
@@ -174,14 +178,15 @@ input:focus{
 		height: 100%;
     z-index:999999;
 }
-.username{
+.info_bar{
   line-height:45px;
   height:45px;
   margin-right: 20px;
+    font-size: 12px;
   float:right;
 }
 @media(min-width:800px){
-  .username{
+  .info_bar{
     margin-right:0px;
   }
 }

@@ -1,7 +1,6 @@
 var router=require("express").Router();
 var model=require("../../../model");
 var youdaoModel=model.youdao;
-var wordModel=model.local_word;
 var users=model.users;
 var word_sound=model.word_sound;
 

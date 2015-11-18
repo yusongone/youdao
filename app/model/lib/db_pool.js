@@ -3,7 +3,7 @@ var Server=mongodb.Server,
     Db=mongodb.Db;
 var config=require("../../../config.json");
 
-var db=new Db("transdb",new Server('localhost',27017));
+var db=new Db("transdb",new Server('localhost',27017),{safe:true});
 var _db_con;
 
 function _initConnection(callback){

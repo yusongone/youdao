@@ -27,6 +27,7 @@
 	margin: 0 auto;
 	margin-bottom:20px;
 }
+.showBox li .error,
 .showBox li .check{
   width: 30px;
   height: 30px;
@@ -34,7 +35,19 @@
   line-height: 30px;
   font-size: 18px;
   color: #00B100;
+  position:absolute;
+  display: none;
 }
+.showBox li .error_text{
+  color: red;
+  font-size: 12px;
+  width: 80px;
+  display: none;
+  position: absolute;
+  line-height: 28px;
+  margin-left: 10px;
+}
+
 .showBox .loginBtn{
 	float:right;
 	margin-right:5px;
@@ -51,5 +64,6 @@ input.captcha{
   margin-left: 70px;
   font-size: 12px;
 }
+
 .toRegister:hover{
 }

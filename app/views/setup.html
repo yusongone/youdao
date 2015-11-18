@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% include public_dom/public_header %>
+        <script src="/js/vendor/require-jquery.min.js" data-main="/js/setup.js" ></script>
+        <link href="/css/vendor/font-awesome.min.css" rel="stylesheet" />
+        <link href="/css/global.css" rel="stylesheet" />
+        <link href="/css/setup.css" rel="stylesheet" />
+        <style rel="stylesheet">
+            .page{
+                position:absolute;
+                width: 800px;
+                top:0;
+                left:0;
+                right:0;
+                bottom:0;
+                background:#f5f5f5;
+                border-radius: 5px;
+                border:1px solid #e8e8e8;
+                padding-left:180px;
+            }
+            .nav_bar{
+                width:180px;
+                height:100%;
+                float:left;
+                font-size: 14px;
+                margin-left:-180px;
+            }
+            .nav_bar ul{
+                margin-top:30px;
+            }
+            .nav_bar li{
+                text-align: left;
+                height: 32px;
+                margin: 3px 0;
+                padding: 0 15px;
+                line-height: 32px;
+                cursor:pointer;
+            }
+            .nav_bar li.active{
+                background:#e8e8e8;
+            }
+            .nav_bar li:hover{
+                color:#000;
+            }
+            .line_v{
+                border-left: 1px solid #e8e8e8;
+                width: 1px;
+                position: absolute;
+                float: left;
+                top:10px;
+                bottom:10px;
+                left:180px;
+            }
+            .setup_page{
+                width:100%;
+                padding:10px;
+            }
+
+            .send_rate,.kindle_email{
+                font-size: 14px;
+                border-bottom: 1px solid #ddd;
+                padding: 0px 20px 20px;
+                float: left;
+                width: 100%;
+                margin-top: 20px;
+            }
+            .send_rate .title,
+            .kindle_email .title{
+                float:left;
+                width:100%;
+                margin-bottom: 15px;
+            }
+            .kindle_setup{
+                width:100%;
+                float: left;
+            }
+            .sub_content{
+                margin-left: 30px;
+            }
+            .send_rate .sub_content .item{
+                margin:0 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="page">
+            <div class="nav_bar">
+                <ul>
+                    <li class="active">Email 设置</li>
+                    <li href="kindle_setup">Kindle 相关</li>
+                    <li>密码设置</li>
+                </ul>
+            </div>
+            <div class="line_v"></div>
+            <div class="setup_page">
+                <div class="kindle_setup">
+                    <div class="send_rate">
+                       <span class="title"> 发送频率: </span>
+                       <div class="sub_content">
+                           <span class="item"> <input type="radio" name="send_rate"/><span>每晚 20:00</span></span>
+                           <span class="item"> <input type="radio" name="send_rate"/><span>周六 20:00</span></span>
+                       </div>
+                    </div>
+                    <div class="kindle_email">
+                        <span class="title">Kindle 邮箱</span>
+                        <div class="sub_content">
+                            <span><input type="text"/></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

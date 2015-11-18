@@ -13,6 +13,7 @@ function _auth(json,callback){
 			if(docAry.length>0){
 				json.id=docAry[0]._id;
 				json.name=docAry[0].account;
+                json.active=docAry[0].active;
 			}
 			callback(err,json);
 		});
@@ -26,21 +27,26 @@ function _addUser(json,callback){
 		var md5=crypto.createHash("md5");
 		var md5Pass=md5.update(pass).digest("base64");
         var timestamp=new Date().getTime();
-        var emailEbel=null,
-            usernameEbel=null;
-        _checkEmail({email:json.email},function(){
-           checkRes();
+        var emailEbel=false,
+            usernameEbel=false;
+        _checkEmail({email:json.email},function(err,status){
+            emailEbel=status;
+            _checkName({username:json.username},function(err,status){
+                usernameEbel=status;
+                checkRes();
+            });
         });
 
-        _checkName({username:json.username},function(){
-            checkRes();
-        });
 
         function checkRes(){
-            col.insert({"account":json.username,"pass":md5Pass,"email":json.email,"active":false,registerTime:timestamp},function(err,result){
-                result.timestamp=timestamp;
-                callback(err,result);
-            });
+            if(emailEbel&&usernameEbel){
+                col.insert({"account":json.username,"pass":md5Pass,"email":json.email,"active":false,registerTime:timestamp},function(err,result){
+                    result.timestamp=timestamp;
+                    callback(err,result);
+                });
+            }else{
+                callback("Email or Name was used!");
+            }
         }
 	});
 }
@@ -60,6 +66,15 @@ function _checkEmail(json,callback){
             }
 		});
 	});
+}
+
+function _activeEmail(json,callback){
+    pool.getCon(function(err,database){
+        var col=database.collection("users");
+        col.update({registerTime:parseInt(json.timestamp),email:json.emailAddress},{$set:{active:true}},function(err,result){
+            callback?callback(err,result):"";
+        });
+    });
 }
 
 function _checkName(json,callback){
@@ -84,3 +99,4 @@ exports.auth=_auth;
 exports.addUser=_addUser;
 exports.checkName=_checkName;
 exports.checkEmail=_checkEmail;
+exports.activeEmail=_activeEmail;

@@ -8,9 +8,8 @@ var mongoStore=require("connect-mongo")(session);
 var session_conf=require("./config.json").session_conf;
 var app=express();
 var model=require("./app/model");
-var Controller=require("./app/controller");
+var controller=require("./app/controller");
 var Task=require("./app/tools/task");
-var playback=Controller.EmailTo;
 var store=new mongoStore({
 		db:session_conf.dbname,
 	            host:session_conf.path,
@@ -30,7 +29,7 @@ model.DB.initConnection(function(){
 	});
 });
 
-app.use(compress());
+//app.use(compress());
 app.use(express.static(__dirname+'/public'));
 app.use(cookieParser("keyboard cat"));
 app.use(bodyParser.json());
@@ -53,7 +52,7 @@ var d=req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.sock
 next();
 });
 
-Controller(app);
+controller.initRouter(app);
 console.log(Task);
 var task=new Task({
 	loop:Task.loopType.WORKDAY,

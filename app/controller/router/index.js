@@ -8,6 +8,7 @@ var home=require("./lib/home");
 var auth=require("./lib/auth");
 var query=require("./lib/query");
 var analyze=require("./lib/analyze");
+var setup=require("./lib/setup");
 
 
 
@@ -19,4 +20,5 @@ exports.init=function(app){
   query(app);
   analyze(app);
   auth(app);
+  setup(app);
 };

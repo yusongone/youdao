@@ -15,12 +15,14 @@
                 <li>
                     <label> 邮件:</label>
                     <input id="email" type="text" />
-                    <i class="fa fa-check check"></i>
+                    <span class="fa fa-check check emailCheck"></span>
+                    <span class="error_text emailAlert">有人抢先了！</span>
                 </li>
 				<li>
 					<label> 用户名:</label>
 					<input id="username" type="text" />
-                    <i class="fa fa-check check"></i>
+                    <span class="fa fa-check check usernameCheck"></span>
+                    <span class="error_text usernameAlert">有人抢先了！</span>
 				</li>
 				<li>
 					<label> 密码:</label>
@@ -32,7 +34,7 @@
 				</li>
 				<li>
                     <label> 邀请码:</label>
-                    <input class="captcha"  id="captcha" placeholder=""/>
+                    <input class="captcha"  id="captcha" type="text" placeholder=""/>
 				</li>
                 <li>
                     <label>&nbsp; </label>

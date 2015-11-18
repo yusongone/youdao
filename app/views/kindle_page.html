@@ -1,10 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh" xml:lang="zh">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title></title>
+    <style rel="stylesheet">
+        *{padding:0;margin:0;list-style: none;}
+        p{line-height: 18px;}
+        .one_word{
+            margin:30px 0;
+        }
+        .wordList{
+           border-top:1px solid #000;
+           border-bottom:1px solid #000;
+        }
+        .phonetic_ui,.basic,.web{
+            font-size: 14px;
+            margin:20px;
+        }
+        .phonetic_ui{
+            font-size: 12px;
+        }
+        .key{
+            font-size:24px;
+            font-weight: 800;
+        }
+        .web_key{
+           font-weight: 800;
+        }
+    </style>
 </head>
 <body>
-
+    <div class="wordList">
+        <% for(var j = 0; j < words.length; j++){ var word=words[j];%>
+            <div class="one_word">
+                <p class="key"> <%= word.word %> </p>
+                <% if(word.trans.basic){var basic=word.trans.basic; %>
+                <div class="phonetic_ui">
+                    <% if(basic["us-phonetic"]){ %>
+                    <p>[ us : <%= basic["us-phonetic"] %> ]</p>
+                    <% } %>
+                    <% if(basic["uk-phonetic"]){ %>
+                    <p>[ uk : <%= basic["uk-phonetic"] %> ]</p>
+                    <% } %>
+                </div>
+                <div class="basic">
+                    <% for(var i=0;i<word.trans.basic.explains.length;i++){ var explains=word.trans.basic.explains[i]; %>
+                    <p><%= explains%></p>
+                    <%}%>
+                </div>
+                <%}%>
+                <%if(word.trans.web){%>
+                <div class="web">
+                    <%for(var i=0;i<word.trans.web.length;i++){ var web=word.trans.web[i];%>
+                    <p>
+                        <span class="web_key"><%= web.key%> : </span>
+                        <span class="web_val"><%= web.value%></span>
+                    </p>
+                    <%}%>
+                </div>
+                <%}%>
+                <% if(word.sentence){ %>
+                    <% for(var i=0; i<word.sentence.length;i++){ %>
+                    <div class="sentence">
+                        <%= word.sentence[i] %>
+                    </div>
+                    <% } %>
+                <% } %>
+            </div>
+        <%}%>
+    </div>
 </body>
 </html>

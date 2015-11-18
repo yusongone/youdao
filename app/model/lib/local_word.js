@@ -78,13 +78,7 @@ function _addWordDate(json,callback){
 function _getMultiDayWordList(json,callback){
 	pool.getCon(function(err,database){
 		var col=database.collection("date");
-		console.log(json.startDate);
-		console.log(json.endDate);
-		col.find({date:{$gte:json.startDate,$lt:json.endDate}},{date:1,wordList:1}).toArray(function(err,ary){
-			console.log(ary.length);
-			console.log(new Date(ary[0].date).toISOString());
-			console.log(new Date(ary[ary.length-1].date).toISOString());
-			console.log(ary.length);
+		col.find({"userId":json.userId,date:{$gte:json.startDate,$lt:json.endDate}},{date:1,wordList:1}).toArray(function(err,ary){
 			if(!ary){
 				callback(err,[]);
 				return;
@@ -94,6 +88,7 @@ function _getMultiDayWordList(json,callback){
 		});
 	});
 }
+
 function _getOneDayWordList(json,callback){
 	pool.getCon(function(err,database){
 		var d=parseInt(json.date)||Math.floor(new Date().getTime()/100000)*100000;
