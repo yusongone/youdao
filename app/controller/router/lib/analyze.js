@@ -10,7 +10,7 @@ module.exports=function(app){
 
 router.get("/",function(req,res,next){
     if(!req.session.userId){
-        res.redirect("/login");
+        res.redirect("/auth/login");
     }
     res.render("analyze",{"username":req.session.userName});
 });

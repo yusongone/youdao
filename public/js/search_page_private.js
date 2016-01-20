@@ -53,7 +53,7 @@ function getPathData(val){
           console.log(data);
           if(data.status=="fail"){
             alert(data.message);
-            location.href="/login"
+            location.href="/auth/login"
             return;
           }
           getDataSuccess();

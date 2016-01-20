@@ -97,7 +97,7 @@ router.get("/register",function(req,res,next){
 
 router.get("/logout",function(req,res,next){
     req.session.userId=null;
-    res.redirect("/login");
+    res.redirect("/auth/login");
 });
 
 router.get("/activeemail/:license",function(req,res,next){
@@ -174,5 +174,7 @@ router.post("/checkTypeAble",function(req,res,next){
         }
     }
 });
+
+
 
 

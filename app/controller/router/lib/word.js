@@ -8,7 +8,7 @@ module.exports=function(app){
 
 router.get("/all",function(req,res,next){
   if(!req.session.userId){
-    res.redirect("/login");
+    res.redirect("/auth/login");
   }
   res.render("today_word",{"username":req.session.userName});
 });
@@ -16,7 +16,7 @@ router.get("/all",function(req,res,next){
 
 router.get("/kindle",function(req,res,next){
   if(!req.session.userId){
-    res.redirect("/login");
+    res.redirect("/auth/login");
   }
   controller.Playback.getOneWeekHtml({userId:req.session.userId},function(err,html){
         if(err){
@@ -36,7 +36,7 @@ router.get("/kindle",function(req,res,next){
 
 router.post("/setStar",function(req,res,next){
   if(!req.session.userId){
-    res.redirect("/login");
+    res.redirect("/auth/login");
   }
   var word=req.body.word;
   var count=req.body.count;

@@ -10,20 +10,25 @@ module.exports=function(app){
 
 router.post("/getDateList",function(req,res,next){
   if(!req.session.userId){
-    res.redirect("/login");
+    res.redirect("/auth/login");
   }
   model.local_word.getDateList({"userId":req.session.userId+""},function(err,result){
+    var responsData={};
     if(!err){
-      res.send(result);
+      responsData.err_code=0;
+      responsData.result=result;
+      res.send(responsData);
     }else{
-      res.send(err);
+      responsData.err_code=500;
+      responsData.msg=err;
+      res.send(responsData);
     }
   });
 });
 
 router.post("/getOneDayWordList",function(req,res,next){
   if(!req.session.userId){
-    res.redirect("/login");
+    res.redirect("/auth/login");
   }
   var date=req.body.date;
   model.local_word.getOneDayWordList({"date":date,"userId":req.session.userId+""},function(err,result){

@@ -102,27 +102,30 @@ page=(function(){
         url:"/query/getDateList",
         type:"post",
         dataType:"json",
-      }).done(function(data){
-          var ul=$("<ul/>",{"class":"datelist"});
-          for(var i=0;i<data.length;i++){
-            var li=$("<li/>",{"text":new Date(data[i].date).toISOString().substr(0,10)}).data("val",data[i].date);
-            var span=$("<span/>",{"class":"count","text":data[i].wordList.length});
-            li.append(span);
-            if(i==0){
-              li.addClass("active");
+      }).done(function(res){
+        if(res.err_code=="0"){
+            var data=res.result;
+            var ul=$("<ul/>",{"class":"datelist"});
+            for(var i=0;i<data.length;i++){
+                var li=$("<li/>",{"text":new Date(data[i].date).toISOString().substr(0,10)}).data("val",data[i].date);
+                var span=$("<span/>",{"class":"count","text":data[i].wordList.length});
+                li.append(span);
+                if(i==0){
+                    li.addClass("active");
+                }
+                li.click(function(){
+                    $(".datelist li").removeClass("active");
+                    $(this).addClass("active");
+                    var loading=$("<i/>",{"class":"fa fa-spinner fa-spin fa-fw loading"})
+                    $(this).append(loading);
+                    page.getWordListByDate($(this).data("val"),loading);
+                });
+                ul.append(li);
             }
-            li.click(function(){
-              $(".datelist li").removeClass("active");
-              $(this).addClass("active");
-              var loading=$("<i/>",{"class":"fa fa-spinner fa-spin fa-fw loading"})
-              $(this).append(loading);
-              page.getWordListByDate($(this).data("val"),loading);
-            });
-            ul.append(li); 
-          }
-          $("#info_box").html("").append(ul);
-          page.getWordListByDate(data[0].date);
-	    });
+            $("#info_box").html("").append(ul);
+            page.getWordListByDate(data[0].date);
+        }
+    });
   }
 
   function _getWordListByDate(date,loading){

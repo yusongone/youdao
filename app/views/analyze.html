@@ -5,11 +5,29 @@
         <script src="/js/vendor/require-jquery.min.js" data-main="/js/analyze.js" ></script>
         <link href="/css/vendor/font-awesome.min.css" rel="stylesheet" />
         <link href="/css/analyze.css" rel="stylesheet" />
-        <style rel="stylesheet"></style>
+        <style rel="stylesheet">
+            .page{top:0;}
+            li{
+                border:1px solid #ddd;
+                display:block;
+                width:100px;
+            }
+            path{
+                stroke: #666;
+                fill: none;
+                stroke-width:1px;
+            }
+            svg{
+                border:1px solid #ddd;
+            }
+
+        </style>
     </head>
     <body>
         <% include public_dom/top_bar %>
         <div class="page">
+            <div class="byDate"></div>
+            <div class="byTime"></div>
         </div>
     </body>
 </html>
