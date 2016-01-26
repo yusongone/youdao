@@ -20,7 +20,15 @@ function _addWord(json,callback){
     json.word=json.word.toLowerCase();
 	    col.findOne({"word":json.word,"userId":json.userId},function(err,result1){
 		    if(null==result1){
-                col.insert({"userId":json.userId,"_id":objId,"word":json.word,"trans":json.obj,"searchCount":1,"star":2},function(err){
+                var insertJson={};
+                    insertJson.userId=json.userId;
+                    insertJson._id=objId;
+                    insertJson.word:json.word;
+                    insertJson.trans=json.obj;
+                    json.sentence?insertJson.sentence=json.sentence:"";
+                    insertJson.searchCount:1;
+                    insertJson.star=2;
+                col.insert(insertJson,function(err){
                     _addWordDate({deviceType:json.deviceType,userId:json.userId,wordId:objId},function(err){
                         updateSentence();
                     });
