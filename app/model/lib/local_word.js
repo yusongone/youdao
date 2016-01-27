@@ -23,20 +23,23 @@ function _addWord(json,callback){
                 var insertJson={};
                     insertJson.userId=json.userId;
                     insertJson._id=objId;
-                    insertJson.word:json.word;
+                    insertJson.word=json.word;
                     insertJson.trans=json.obj;
-                    json.sentence?insertJson.sentence=json.sentence:"";
-                    insertJson.searchCount:1;
+                    insertJson.searchCount=1;
                     insertJson.star=2;
                 col.insert(insertJson,function(err){
+console.log("add word and sentence");
+                    updateSentence();
                     _addWordDate({deviceType:json.deviceType,userId:json.userId,wordId:objId},function(err){
-                        updateSentence();
+console.log("sentence");
                     });
                 });
             }else{
                 col.update({"userId":json.userId,"word":json.word},{$inc:{"searchCount":1}},function(err){
+console.log("update word and sentence");
+                   updateSentence();
                     _addWordDate({deviceType:json.deviceType,userId:json.userId,wordId:result1._id},function(err,result2){
-                        updateSentence();
+console.log("sentence");
                     });
                 });
             };
@@ -79,6 +82,7 @@ function _addWordDate(json,callback){
 						list.push({wordId:wordId,reqInfo:[timestamp]});
 						col.update({"userId":json.userId,"date":d},{$set:{"wordList":list}});
 					}
+					callback(err);
 				});
 			};
 		});
