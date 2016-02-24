@@ -13,7 +13,7 @@ var Task=require("./app/tools/task");
         //host:,
 var store=new mongoStore({
 		//db:session_conf.dbname,
-        url:'mongodb://'+session_conf.path+'/'+session_conf.db,
+        url:'mongodb://'+session_conf.path+'/'+session_conf.dbname,
         port:session_conf.port,  // optional, default: 27017
         username:session_conf.user, // optional
         password:session_conf.pass, // optional
