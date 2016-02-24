@@ -10,10 +10,10 @@ var app=express();
 var model=require("./app/model");
 var controller=require("./app/controller");
 var Task=require("./app/tools/task");
-        //host:session_conf.path,
+        //host:,
 var store=new mongoStore({
 		//db:session_conf.dbname,
-        url:'mongodb://localhost/'+session_conf.db,
+        url:'mongodb://'+session_conf.path+'/'+session_conf.db,
         port:session_conf.port,  // optional, default: 27017
         username:session_conf.user, // optional
         password:session_conf.pass, // optional
