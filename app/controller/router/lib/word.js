@@ -13,6 +13,16 @@ router.get("/all",function(req,res,next){
   res.render("today_word",{"username":req.session.userName});
 });
 
+router.get("/apollo",function(req,res,next){
+
+  console.log("feas");
+
+  if(!req.session.userId){
+    res.redirect("/auth/login");
+  }
+  res.render("apollo",{"username":req.session.userName});
+});
+
 
 router.get("/kindle",function(req,res,next){
   if(!req.session.userId){
