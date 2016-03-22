@@ -6,3 +6,6 @@
 .idea/youdao.iml
 build/
 .idea/
+.idea/encodings.xml
+public/js/jsx/build/.module-cache/*
+*.swp
