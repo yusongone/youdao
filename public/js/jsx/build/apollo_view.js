@@ -10,85 +10,8 @@
 
     var _Dictionary=(function(){
         var _queryEvents=[];
+        var queryConect=null;
 
-        var resultsBoard=React.createClass({displayName: "resultsBoard",
-            getInitialState:function(){
-                return {
-                    abc:"234"
-                }
-            },
-            render:function(){
-                return React.createElement("div", {className: "queryResults"}, 
-                    this.state.abc, 
-                    React.createElement("div", {id: "trans_show", class: "trans_show"}, 
-                        React.createElement("ul", {class: "phonetic_ui"}, 
-                            React.createElement("li", null, "[ us : tɛst ]"), 
-                            React.createElement("li", null, "[ uk : test ]")
-                        ), 
-                        React.createElement("ul", {class: "e_ui"}, 
-                            React.createElement("li", null, "n. 试验；检验"), 
-                            React.createElement("li", null, "vt. 试验；测试"), 
-                            React.createElement("li", null, "vi. 试验；测试"), 
-                            React.createElement("li", null, "n. (Test)人名；(英)特斯特")
-                        ), 
-                        React.createElement("ul", {class: "web_ui"}, 
-                            React.createElement("li", null, 
-                                React.createElement("span", {class: "key"}, "Test"), 
-                                React.createElement("p", {class: "value"}, "测试"), 
-                                React.createElement("p", {class: "value"}, "测验"), 
-                                React.createElement("p", {class: "value"}, "检验")
-                            ), 
-                            React.createElement("li", null, 
-                                React.createElement("span", {class: "key"}, "DROP TEST"), 
-                                React.createElement("p", {class: "value"}, "跌落测试"), 
-                                React.createElement("p", {class: "value"}, "跌落试验"), 
-                                React.createElement("p", {class: "value"}, "坠落试验")
-                            ), 
-                            React.createElement("li", null, 
-                                React.createElement("span", {class: "key"}, "test case"), 
-                                React.createElement("p", {class: "value"}, "测试用例"), 
-                                React.createElement("p", {class: "value"}, "测试案例"), 
-                                React.createElement("p", {class: "value"}, "测试个案")
-                            )
-                        )
-                    )
-                )
-            }
-        });
-
-        var Box=React.createClass({displayName: "Box",
-            componentWillMount:function(){
-                var self=this;
-                this.props.Event.bind("updateInfo",function(json){
-                    self.setState(json);
-                });
-            },
-            getInitialState:function(){
-               return {
-                   inputValue:"fe"
-               }
-            },
-            _onChange:function(events){
-                this.state.inputValue=events.target.value;
-                this.setState(this.state);
-            },
-            _keyPress:function(event){
-                var self=this;
-                if(event.key=="Enter"){
-                    _queryEvents.map(function(item){
-                        item.call(self,self.state.inputValue);
-                    });
-                };
-            },
-            render:function(){
-                var self=this;
-                return React.createElement("div", {className: "dictionary_area"}, 
-                    this.state.abc, 
-                            React.createElement("input", {value: self.state.inputValue, onKeyPress: self._keyPress, onChange: self._onChange}), 
-                            React.createElement("resultsBoard", null)
-                        )
-            }
-        });
 
         var Event={
             _handlers:{},
@@ -105,9 +28,115 @@
             }
         }
 
+        function queryFromServer(val){
+            //var data={"translation":["测试"],"basic":{"us-phonetic":"tɛst","phonetic":"test","uk-phonetic":"test","explains":["n. 试验；检验","vt. 试验；测试","vi. 试验；测试","n. (Test)人名；(英)特斯特"]},"query":"test","errorCode":0,"web":[{"value":["测试","测验","检验"],"key":"Test"},{"value":["跌落测试","跌落试验","坠落试验"],"key":"DROP TEST"},{"value":["测试用例","测试案例","测试个案"],"key":"test case"}]};
+            queryConect=$.ajax({
+                url:"/trans/getTranslateData",
+                type:"post",
+                data:{
+                    "q":val,
+                    "deviceType":0
+                },
+                dataType:"json",
+            }).done(function(data){
+                if(data.status=="fail"){
+                    alert(data.message);
+                    location.href="/auth/login"
+                    return;
+                }else{
+                    Event.fire("updateState",[data]);
+                }
+            });
+        }
+
+        var ResultsBoard=React.createClass({displayName: "ResultsBoard",
+            componentWillMount:function(){
+                var self=this;
+                Event.bind("updateState",function(json){
+                    console.log(json);
+                    self.setState(json);
+                });
+            },
+            getInitialState:function(){
+                return {
+                    abc:"234"
+                }
+            },
+            render:function(){
+                var e_ui="",
+                    web_ui="";
+
+                if(this.state.basic&&this.state.basic.explains) {
+                    e_ui = this.state.basic.explains.map(function (item) {
+                        return React.createElement("li", {key: item}, item)
+
+                    });
+                }else{
+                    return React.createElement("div", null);
+                }
+
+                if(this.state.web) {
+                    web_ui= this.state.web.map(function (item,index) {
+                        var temp=item.value.map(function(item2,index2){
+                            return React.createElement("p", {key: index2, className: "value"}, item2)
+                        });
+                        console.log(item,index);
+                        return React.createElement("li", {key: index}, React.createElement("span", {className: "key"}, item.key), temp)
+                    });
+                }
+                return React.createElement("div", {className: "query_results_box"}, 
+                    React.createElement("div", {id: "trans_show", className: "trans_show"}, 
+                        React.createElement("ul", {className: "phonetic_ui"}, 
+                            React.createElement("li", null, this.state.basic?(this.state.basic["uk-phonetic"]||""):""), 
+                            React.createElement("li", null, this.state.basic?(this.state.basic["us-phonetic"]||""):"")
+                        ), 
+                        React.createElement("ul", {className: "e_ui"}, 
+                            e_ui
+                        ), 
+                        React.createElement("ul", {className: "web_ui"}, 
+                            web_ui
+                        )
+                    )
+                )
+            }
+        });
+
+        var Box=React.createClass({displayName: "Box",
+            componentWillMount:function(){
+            },
+            getInitialState:function(){
+               return {
+                   inputValue:"fe"
+               }
+            },
+            _onChange:function(events){
+                this.state.inputValue=events.target.value;
+                this.setState(this.state);
+            },
+            _keyPress:function(event){
+                var self=this;
+                if(event.key=="Enter"){
+                    queryFromServer(this.state.inputValue);
+                };
+            },
+            render:function(){
+                var self=this;
+                var bingUrl="http://cn.bing.com/dict/?q="+self.state.inputValue;
+                return React.createElement("div", {className: "dictionary_area"}, 
+                            React.createElement("div", {className: "tools_box"}, 
+                                React.createElement("input", {className: "search_input", value: self.state.inputValue, onKeyPress: self._keyPress, onChange: self._onChange}), 
+                                React.createElement("i", {className: "fa fa-search search_btn"}), 
+                                React.createElement("a", {target: "_blank", className: "bing_link", href: bingUrl}, "Bing:", self.state.inputValue)
+                            ), 
+                            React.createElement(ResultsBoard, null)
+                        )
+            }
+        });
+
+
         return {
             show:function(options){
-                ReactDOM.render(React.createElement(Box, {Event: Event}),options.parentDOM);
+                ReactDOM.render(React.createElement(Box, null),options.parentDOM);
             },
             bindQueryEvents:function(handler){
                 _queryEvents.push(handler);
@@ -179,7 +208,8 @@
                     clickHandler?clickHandler():"";
                 },
                 componentDidMount:function(){
-
+                    var data=this.props.data;
+                    data.onMount?data.onMount():"";
                 },
                 render:function(){
                     var self=this;
