@@ -10,85 +10,8 @@
 
     var _Dictionary=(function(){
         var _queryEvents=[];
+        var queryConect=null;
 
-        var resultsBoard=React.createClass({
-            getInitialState:function(){
-                return {
-                    abc:"234"
-                }
-            },
-            render:function(){
-                return <div className="queryResults" >
-                    {this.state.abc}
-                    <div id="trans_show" class="trans_show">
-                        <ul class="phonetic_ui">
-                            <li>[ us : tɛst ]</li>
-                            <li>[ uk : test ]</li>
-                        </ul>
-                        <ul class="e_ui">
-                            <li>n. 试验；检验</li>
-                            <li>vt. 试验；测试</li>
-                            <li>vi. 试验；测试</li>
-                            <li>n. (Test)人名；(英)特斯特</li>
-                        </ul>
-                        <ul class="web_ui">
-                            <li>
-                                <span class="key">Test</span>
-                                <p class="value">测试</p>
-                                <p class="value">测验</p>
-                                <p class="value">检验</p>
-                            </li>
-                            <li>
-                                <span class="key">DROP TEST</span>
-                                <p class="value">跌落测试</p>
-                                <p class="value">跌落试验</p>
-                                <p class="value">坠落试验</p>
-                            </li>
-                            <li>
-                                <span class="key">test case</span>
-                                <p class="value">测试用例</p>
-                                <p class="value">测试案例</p>
-                                <p class="value">测试个案</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            }
-        });
-
-        var Box=React.createClass({
-            componentWillMount:function(){
-                var self=this;
-                this.props.Event.bind("updateInfo",function(json){
-                    self.setState(json);
-                });
-            },
-            getInitialState:function(){
-               return {
-                   inputValue:"fe"
-               }
-            },
-            _onChange:function(events){
-                this.state.inputValue=events.target.value;
-                this.setState(this.state);
-            },
-            _keyPress:function(event){
-                var self=this;
-                if(event.key=="Enter"){
-                    _queryEvents.map(function(item){
-                        item.call(self,self.state.inputValue);
-                    });
-                };
-            },
-            render:function(){
-                var self=this;
-                return <div className="dictionary_area">
-                    {this.state.abc}
-                            <input value={self.state.inputValue} onKeyPress={self._keyPress} onChange={self._onChange} />
-                            <resultsBoard></resultsBoard>
-                        </div>
-            }
-        });
 
         var Event={
             _handlers:{},
@@ -105,9 +28,115 @@
             }
         }
 
+        function queryFromServer(val){
+            //var data={"translation":["测试"],"basic":{"us-phonetic":"tɛst","phonetic":"test","uk-phonetic":"test","explains":["n. 试验；检验","vt. 试验；测试","vi. 试验；测试","n. (Test)人名；(英)特斯特"]},"query":"test","errorCode":0,"web":[{"value":["测试","测验","检验"],"key":"Test"},{"value":["跌落测试","跌落试验","坠落试验"],"key":"DROP TEST"},{"value":["测试用例","测试案例","测试个案"],"key":"test case"}]};
+            queryConect=$.ajax({
+                url:"/trans/getTranslateData",
+                type:"post",
+                data:{
+                    "q":val,
+                    "deviceType":0
+                },
+                dataType:"json",
+            }).done(function(data){
+                if(data.status=="fail"){
+                    alert(data.message);
+                    location.href="/auth/login"
+                    return;
+                }else{
+                    Event.fire("updateState",[data]);
+                }
+            });
+        }
+
+        var ResultsBoard=React.createClass({
+            componentWillMount:function(){
+                var self=this;
+                Event.bind("updateState",function(json){
+                    console.log(json);
+                    self.setState(json);
+                });
+            },
+            getInitialState:function(){
+                return {
+                    abc:"234"
+                }
+            },
+            render:function(){
+                var e_ui="",
+                    web_ui="";
+
+                if(this.state.basic&&this.state.basic.explains) {
+                    e_ui = this.state.basic.explains.map(function (item) {
+                        return <li key={item}>{item}</li>
+
+                    });
+                }else{
+                    return <div></div>;
+                }
+
+                if(this.state.web) {
+                    web_ui= this.state.web.map(function (item,index) {
+                        var temp=item.value.map(function(item2,index2){
+                            return <p key={index2} className="value">{item2}</p>
+                        });
+                        console.log(item,index);
+                        return <li key={index}><span className="key">{item.key}</span>{temp}</li>
+                    });
+                }
+                return <div className="query_results_box" >
+                    <div id="trans_show" className="trans_show">
+                        <ul className="phonetic_ui">
+                            <li>{this.state.basic?(this.state.basic["uk-phonetic"]||""):""}</li>
+                            <li>{this.state.basic?(this.state.basic["us-phonetic"]||""):""}</li>
+                        </ul>
+                        <ul className="e_ui">
+                            {e_ui}
+                        </ul>
+                        <ul className="web_ui">
+                            {web_ui}
+                        </ul>
+                    </div>
+                </div>
+            }
+        });
+
+        var Box=React.createClass({
+            componentWillMount:function(){
+            },
+            getInitialState:function(){
+               return {
+                   inputValue:"fe"
+               }
+            },
+            _onChange:function(events){
+                this.state.inputValue=events.target.value;
+                this.setState(this.state);
+            },
+            _keyPress:function(event){
+                var self=this;
+                if(event.key=="Enter"){
+                    queryFromServer(this.state.inputValue);
+                };
+            },
+            render:function(){
+                var self=this;
+                var bingUrl="http://cn.bing.com/dict/?q="+self.state.inputValue;
+                return <div className="dictionary_area">
+                            <div className="tools_box">
+                                <input className="search_input" value={self.state.inputValue} onKeyPress={self._keyPress} onChange={self._onChange} />
+                                <i className="fa fa-search search_btn"></i>
+                                <a target="_blank" className="bing_link" href={bingUrl}>Bing:{self.state.inputValue}</a>
+                            </div>
+                            <ResultsBoard></ResultsBoard>
+                        </div>
+            }
+        });
+
+
         return {
             show:function(options){
-                ReactDOM.render(<Box Event={Event} ></Box>,options.parentDOM);
+                ReactDOM.render(<Box></Box>,options.parentDOM);
             },
             bindQueryEvents:function(handler){
                 _queryEvents.push(handler);
@@ -179,7 +208,8 @@
                     clickHandler?clickHandler():"";
                 },
                 componentDidMount:function(){
-
+                    var data=this.props.data;
+                    data.onMount?data.onMount():"";
                 },
                 render:function(){
                     var self=this;

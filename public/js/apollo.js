@@ -9,10 +9,10 @@
                         View.Dictionary.show({
                             parentDOM:document.getElementById("ContentBox"),
                         });
-                        View.Dictionary.bindQueryEvents(function(value){
-                            View.Dictionary.updateQueryResult({});
-                        });
-                    }
+                    },
+                },
+                {
+                    "title":"记事本"
                 },
                 {
                     "title":"单词库",
@@ -30,10 +30,28 @@
                     }],
                     onClick: function () {
 
+                    },
+                    onMount:function(){
+                        this.childs[0].onClick();
                     }
                 },
                 {
-                    "title":"---",
+                    "title":"分析",
+                },
+                {
+                    "title":"设置",
+                    "childs": [{
+                        title: "个人信息",
+                        onClick: function () {
+                            View.WordLibBox.show({
+                                parentDOM:document.getElementById("ContentBox"),
+                            });
+                        }
+                    }, {
+                        title: "Kindle",
+                    },{
+                        title: "密码",
+                    }],
                 }
             ]
         });
