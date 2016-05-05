@@ -1,5 +1,17 @@
 ;(function(){
     window.onload=function(){
+        var content=document.getElementById("ContentBox");
+
+        function getContextSize(){
+            return{
+                width:content.offsetWidth,
+                height:content.offsetHeight
+            }
+        }
+
+        window.onresize=function(){
+            getContextSize();
+        };
         View.Plugins.Collapse.init({
             parentDOM:document.getElementById("SideBarContent"),
             nodesData:[
@@ -20,7 +32,7 @@
                         title: "全部",
                         onClick: function () {
                             View.WordLibBox.show({
-                                parentDOM:document.getElementById("ContentBox"),
+                                parentDOM:document.getElementById("ContentBox")
                             });
                         }
                     },{
@@ -30,13 +42,21 @@
                     }],
                     onClick: function () {
 
-                    },
-                    onMount:function(){
-                        this.childs[0].onClick();
                     }
                 },
                 {
                     "title":"分析",
+                    onClick: function () {
+                        var z=document.createElement("div");
+                            z.style="width:100%;height:100%;"
+                        document.getElementById("ContentBox").appendChild(z),
+                        View.Analyze.show({
+                            parentDOM:z
+                        });
+                    },
+                    onMount:function(){
+                        this.onClick();
+                    }
                 },
                 {
                     "title":"设置",
@@ -44,7 +64,7 @@
                         title: "个人信息",
                         onClick: function () {
                             View.WordLibBox.show({
-                                parentDOM:document.getElementById("ContentBox"),
+                                parentDOM:document.getElementById("ContentBox")
                             });
                         }
                     }, {
