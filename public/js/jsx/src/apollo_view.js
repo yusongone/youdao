@@ -1,12 +1,12 @@
 ;(function(factory){
     if(typeof(define)==="function"){
-
+        define(["react","react-dom","chart"],factory);
     }else{
         window.View=Window.View||{};
         factory(window.View);
     }
-})(function(_view){
-    var View=_view||{};
+})(function(React,ReactDOM,Chart){
+    var View=window._view||{};
 
     var _Dictionary=(function(){
         var _queryEvents=[];
@@ -53,7 +53,6 @@
             componentWillMount:function(){
                 var self=this;
                 Event.bind("updateState",function(json){
-                    console.log(json);
                     self.setState(json);
                 });
             },
@@ -80,7 +79,6 @@
                         var temp=item.value.map(function(item2,index2){
                             return <p key={index2} className="value">{item2}</p>
                         });
-                        console.log(item,index);
                         return <li key={index}><span className="key">{item.key}</span>{temp}</li>
                     });
                 }
@@ -163,6 +161,7 @@
         })();
         return {
             show:function(options){
+                alert();
                 TopBar.init(options);
             }
         }
@@ -293,162 +292,6 @@
         })();
 
 
-        var _Chart=(function(){
-            var resizeFilter;
-            var viewArea, width, height, originData, xScale, xAxis, yAxis, yScale, xDomain, yDomain;
-            var leftRulerWidth=50,bottomRulerHeight=30;
-
-
-            function Axis(options){
-                this.axisDOM=viewArea.append("g");
-                this.axisDOM.attr(options.attrs);
-                this.position=options.position;
-                this.axisDOM.attr("transform","translate("+this.position()[0]+","+this.position()[1]+")");
-                var _axis=d3.svg.axis();
-                    _axis.orient(options.orient);
-                    _axis.tickFormat(options.tickFormat);
-                    _axis.outerTickSize([1])
-                    options.ticks&&_axis.ticks(options.ticks);
-                this.axis=_axis;
-                this.update(options.scale);
-            }
-            Axis.prototype.resize=function(scale){
-                this.update(scale);
-                this.axisDOM.attr("transform","translate("+this.position()[0]+","+this.position()[1]+")");
-            }
-            Axis.prototype.update=function(scale){
-                this.axis.scale(scale);
-                this.axisDOM.transition().duration(1000).call(this.axis);
-            }
-
-
-
-            function _renderRuler(){
-                xAxis=new Axis({
-                    orient:"bottom",
-                    scale:xScale,
-                    ticks:5,
-                    tickFormat:function(item){
-                        return d3.time.format("%Y-%m-%d")(item);
-                    },
-                    position:function(){
-                        return [leftRulerWidth,height-bottomRulerHeight];
-                    },
-                    attrs:{
-                        "shape-rendering":"crispEdges",
-                        "fill-width":"1px",
-                        "stroke":"none",
-                        "fill":"#999",
-                        "class":"xAxis"
-                    }
-                });
-
-                yAxis=new Axis({
-                    orient:"left",
-                    scale:yScale,
-                    ticks:8,
-                    position:function(){
-                        return [leftRulerWidth,0];
-                    },
-                    tickFormat:function(item){
-                        return item;
-                    },
-                    attrs:{
-                        "shape-rendering":"crispEdges",
-                        "fill-width":"1px",
-                        "stroke":"none",
-                        "fill":"#999",
-                        "class":"yAxis"
-                    }
-                });
-
-            }
-
-            function computeScale(){
-                xDomain=d3.extent(originData,function(item){
-                    return new Date(item.date);
-                });
-
-                yDomain=d3.extent(originData,function(item){
-                    return item.wordList.length;
-                });
-
-                xScale=d3.time.scale();
-                xScale.domain(xDomain);
-                xScale.rangeRound([0,width-leftRulerWidth]);
-
-                yScale=d3.scale.linear();
-                yScale.domain(yDomain);
-                yScale.rangeRound([height-bottomRulerHeight,0]);
-
-            }
-
-            function _renderLine(){
-                this.lineBox=viewArea.append("g");
-                this.lineBox.attr("transform","translate("+leftRulerWidth+","+0+")");
-                var line=d3.svg.line();
-                    line.x(function(item,index){
-                        return xScale(new Date(item.date));
-                    });
-                    line.y(function(item,index){
-                        console.log(yScale(item.wordList.length));
-                        return yScale(item.wordList.length);
-                    });
-                var path=lineBox.append("path");
-                    path.datum(originData);
-                    path.attr("d",line);
-                    path.attr({
-                        "fill":"none",
-                        "stroke":"red",
-                        "stroke-width":"1px",
-                    });
-            }
-
-
-           return {
-               init:function(options){
-
-                   width=options.width;
-                   height=options.height;
-                   originData=options.data;
-
-                   var parentDOM=options.parentDOM;
-                   viewArea=d3.select(parentDOM).append("svg");
-                   viewArea.attr("viewBox","0,0,"+width+","+height);
-
-                   computeScale();
-                   _renderRuler();
-                   _renderLine();
-                   setTimeout(function(){
-                       console.log(originData.length);
-                       for(var i=0;i<100;i++){
-                           originData.shift();
-                       }
-                       console.log(originData);
-                       computeScale();
-                       xAxis.update(xScale);
-                   },2000);
-                   /*
-                   */
-               },
-               reSize:function(_width,_height){
-                   if(width==_width&&height==height){return;}
-                   width=_width;
-                   height=_height;
-                   viewArea.attr("viewBox","0,0,"+width+","+height);
-                   if(resizeFilter){
-                       clearTimeout(resizeFilter);
-                   }
-                   resizeFilter=setTimeout(function(){
-                       computeScale();
-                       xAxis.resize(xScale);
-                       yAxis.resize(yScale);
-                   },500);
-               }
-           }
-        })();
-
-
 
 
         return {
@@ -459,13 +302,13 @@
 
                 _Http.getAllDetailData({},function(data){
                     options.data=data;
-                    _Chart.init(options);
+                    Chart.init(options);
                 });
 
                 window.onresize=function(){
                     var width=options.parentDOM.offsetWidth,
                         height=options.parentDOM.offsetHeight;
-                    _Chart.reSize(width,height);
+                        Chart.reSize(width,height);
                 }
             }
         }
