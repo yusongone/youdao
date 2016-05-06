@@ -1,5 +1,11 @@
-;(function(){
-    window.onload=function(){
+define(["apollo_view"],function(View){
+
+   return {
+       main:_main
+   }
+
+    function _main(){
+
         var content=document.getElementById("ContentBox");
 
         function getContextSize(){
@@ -47,9 +53,12 @@
                 {
                     "title":"分析",
                     onClick: function () {
+                        var contentBox=document.getElementById("ContentBox");
+                            contentBox.innerHTML="";
                         var z=document.createElement("div");
-                            z.style="width:100%;height:100%;"
-                        document.getElementById("ContentBox").appendChild(z),
+                            z.style="width:100%;height:300px;"
+                            contentBox.appendChild(z),
+
                         View.Analyze.show({
                             parentDOM:z
                         });
@@ -76,14 +85,4 @@
             ]
         });
     };
-
-    var wordLib=(function(){
-        function _getData(){
-
-        }
-
-        return {
-
-        }
-    })();
-})();
+});

@@ -89,7 +89,7 @@ function deleteRepeat(){
 
 //changeDateStringToTimestamp();
 //changeDateKeyFromTimestampToStr();
-//deleteRepeat();
+deleteRepeat();
 exports.a=changeDateKeyFromTimestampToStr;
 exports.b=deleteRepeat;
 exports.c=function(){
