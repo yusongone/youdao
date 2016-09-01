@@ -1,0 +1,24 @@
+{
+  "name": "web_resource",
+  "version": "0.0.1",
+  "description": "蛛丝马迹页面前端资源",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run dev",
+    "dev": "webpack-dev-server --config webpack.config.dev.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "redux-protal": "0.0.1"
+  },
+  "devDependencies": {
+    "ntypescript": "^1.201607250008.1",
+    "ts-jsx-loader": "^0.2.1",
+    "ts-loader": "^0.8.2",
+    "typescript": "^1.8.10"
+  }
+}
