@@ -1,4 +1,3 @@
-app/.idea
 .idea/.name
 .idea/misc.xml
 .idea/modules.xml
@@ -8,5 +7,6 @@ app/.idea
 build/
 .idea/
 .idea/encodings.xml
+app/.idea
 public/js/jsx/build/.module-cache/*
 *.swp
