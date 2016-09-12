@@ -1,5 +1,5 @@
 module.exports={
-    entry:["./src/entry/index.ts"],
+    entry:["./src/entry/index.tsx","./src/entry/index.js"],
     output:{
         filename:"bundle.js",
         path: __dirname + '/dist',
@@ -10,10 +10,15 @@ module.exports={
         extensions:["",".js",".ts",".jsx"]
     },
     devServer:{
-        contentBase:"./"              
+        contentBase:"./",
+        port:"9900"
     },
     module:{
         loaders:[
+            {
+                test:/\.js?$/,
+                loader:'babel'
+            },
             {
                 test:/\.tsx$/,
                 loader:'ts-loader'
