@@ -1,0 +1,10 @@
+{
+    "compilerOptions":{
+        "module": "amd",
+        "sourceMap":true,
+        "jsx":"react"
+    },
+    "files":[
+        "typings/index.d.ts"
+    ]
+}

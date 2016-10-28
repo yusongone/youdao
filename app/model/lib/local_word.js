@@ -74,13 +74,13 @@ function _addWordDate(json,callback){
 								temp.reqInfo=[];
 							};
 							temp.reqInfo.push(timestamp);
-							col.update({"userId":json.userId,"date":d},{$set:{"wordList":list}});
+							col.update({"userId":json.userId,"date":d},{$set:{"wordList":list}},function(){});
 							has=true;
 						};
 					}
 					if(!has){
 						list.push({wordId:wordId,reqInfo:[timestamp]});
-						col.update({"userId":json.userId,"date":d},{$set:{"wordList":list}});
+						col.update({"userId":json.userId,"date":d},{$set:{"wordList":list}},function(err){});
 					}
 					callback(err);
 				});
